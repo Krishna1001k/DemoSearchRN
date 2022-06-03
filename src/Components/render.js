@@ -1,19 +1,18 @@
 import {
-  View,
-  Text,
+  View,Text,
   FlatList,
   Image,
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useRef} from 'react';
 import styles from '../Utils/Style';
 import {useDispatch, useSelector} from 'react-redux';
 import ApiCall from '../Redux/Home/action';
 import {useNavigation} from '@react-navigation/native';
 
 const rendring = (item, navigation) => {
-  // console.log(item);
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('detail', item)}
@@ -29,8 +28,11 @@ const Render = props => {
   const navigation = useNavigation();
   const [isloading, setIsLoading] = useState(true);
   const [footerloading, setFooterLoading] = useState(true);
-  const {Page, Text} = useSelector(store => store.HomeReducer);
+  const reff=useRef(null);
+  const {Page, myText} = useSelector(store => store.HomeReducer);
   const dispatch = useDispatch();
+
+
   return (
     <View style={styles.flatListView}>
       <FlatList
@@ -54,7 +56,7 @@ const Render = props => {
             dispatch({type: 'PAGE', payload: {Page: Page + 1}});
             dispatch(
               ApiCall(
-                Text,
+                myText,
                 value => {
                   console.log(value);
                   setIsLoading(value);
@@ -68,7 +70,7 @@ const Render = props => {
           } else {
             dispatch(
               ApiCall(
-                Text,
+                myText,
                 value => {
                   console.log(value);
                   setIsLoading(value);
@@ -81,10 +83,14 @@ const Render = props => {
             );
           }
         }}
-
+        ref={reff}
         onEndReachedThreshold={0.8}
-    
       />
+      <TouchableOpacity style={styles.btnSty} onPress={()=>{
+        reff.current.scrollToOffset({offset:0});
+      }}>
+        <Text>GoTop</Text>
+      </TouchableOpacity>
     </View>
   );
 };

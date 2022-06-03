@@ -1,7 +1,7 @@
 const initialState={
     ApiData:[],
     Page:1,
-    Text:'photo'
+    myText:'photo'
     
 }
 

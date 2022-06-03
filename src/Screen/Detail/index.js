@@ -19,8 +19,6 @@ const Detail = () => {
     setLoading(value)
   }
 
-
-
   const {
     params: {urls, user},
   } = useRoute();

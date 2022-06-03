@@ -31,11 +31,19 @@ const styles = StyleSheet.create({
     cardHeaderText:{
         fontSize:20,
         fontWeight:'700',
-    }
-    
-
-
-    
+    },
+    btnSty:{
+        backgroundColor:color.lightAqua,
+        height: '6%',
+        width:'20%',
+        zIndex: 1,
+        position:'absolute',
+        bottom:10,
+        right:10,
+        borderRadius:30,
+        justifyContent:'center',
+        alignItems:'center',
+    }    
 })
 
 export default styles
