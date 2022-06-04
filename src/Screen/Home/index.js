@@ -15,10 +15,14 @@ import Render from '../../Components/render';
 const Home = () => {
   const dispatch = useDispatch();
 const [text,setText]=useState('');
+const [loading,setLoading]=useState(true)
   const {ApiData, Page} = useSelector(store => store.HomeReducer);
 
 
   useEffect(() => {
+
+    
+    
     dispatch({type: 'PAGE', payload: {Page: 1}});
     dispatch(
       ApiCall(
@@ -58,6 +62,7 @@ const [text,setText]=useState('');
   
 
   return( 
+   
     <View style={styles.main}>
       <Text style={HomeStyle.headerText}>Photo Gallery</Text>
       <View style={HomeStyle.searchView}>
@@ -67,17 +72,16 @@ const [text,setText]=useState('');
              helperFun(txt)
              setText(txt)
          dispatch({type: 'PAGE', payload: {Page:1}})
-             
-            
           }}
         />
       </View>
-      {ApiData ? (
+      {ApiData.length>0 ? (
         <Render data={ApiData} />
       ) : (
         <ActivityIndicator style={styles.main} size="large" color="grey" />
       )}
-    </View>)
+    </View>
+    )
 
 }
 
