@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {View,Text, TextInput, TouchableOpacity, ActivityIndicator,} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from '../../Utils/Style';
 import {useSelector, useDispatch} from 'react-redux';
@@ -14,47 +8,25 @@ import Render from '../../Components/render';
 
 const Home = () => {
   const dispatch = useDispatch();
-const [text,setText]=useState('');
-const [loading,setLoading]=useState(true)
+  const [text,setText]=useState('');
   const {ApiData, Page} = useSelector(store => store.HomeReducer);
 
 
   useEffect(() => {
-
-    
-    
-    dispatch({type: 'PAGE', payload: {Page: 1}});
-    dispatch(
-      ApiCall(
-        'photo',
-        value => console.log(value),
-        value => console.log(value),
-      ),
-    );
+    dispatch( ApiCall( 'photo',value => console.log(value)))
   }, []);
 
   function debounce(func, timeout = 1000) {
     let timer;
     return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func.apply(this, args);
-      }, timeout);
-    };
+      clearTimeout(timer)
+      timer = setTimeout(() => {func.apply(this, args)}, timeout);
+    }
   }
 
   const helperFun = useCallback(
     debounce(txt =>
-      dispatch(
-        ApiCall(
-          txt,
-          (value) => {
-
-            console.log(value);
-          },
-         ( value) => {dispatch({type: 'ADD_DATA', payload:{ApiData:[]}})
-         return console.log(value)},
-        ),
+      dispatch(ApiCall(txt,(bool) =>{bool?console.log(bool):dispatch({type: 'ADD_DATA', payload:{ApiData:[]}})}),
       ),
     ),
     [],
@@ -68,10 +40,7 @@ const [loading,setLoading]=useState(true)
       <View style={HomeStyle.searchView}>
         <TextInput
           placeholder="Search"
-          onChangeText={txt => {
-             helperFun(txt)
-             setText(txt)
-         dispatch({type: 'PAGE', payload: {Page:1}})
+          onChangeText={txt => {helperFun(txt) ,setText(txt),dispatch({type: 'PAGE', payload: {Page:1}})
           }}
         />
       </View>

@@ -3,7 +3,7 @@ const {height, width} = Dimensions.get('screen');
 import { color } from '../../Utils/color';
 const detailStyle = StyleSheet.create({
   detailView: {
-    height: height / 2.7,
+    height: height / 2.5,
     width: width / 1.1,
     borderRadius:5,
     overflow: 'hidden',
@@ -43,11 +43,12 @@ const detailStyle = StyleSheet.create({
   userDtailView:{
       height:height/4,
       width:width/1.1,
-      margin:10,
+
       borderRadius:10,
       paddingVertical:5,
       paddingHorizontal:15,
-    //   justifyContent:'center',
+      position: 'absolute',
+      top:450,
       alignItems:'center',
       backgroundColor:color.lightAqua,
       shadowColor: '#000',
@@ -64,6 +65,10 @@ const detailStyle = StyleSheet.create({
       marginVertical:5,
       fontSize:14,
       fontWeight:'500',
+  },
+  activityStyle:{
+    position:'absolute',
+    top:100,
   }
 
 
