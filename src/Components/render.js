@@ -10,10 +10,20 @@ import styles from '../Utils/Style';
 import {useDispatch, useSelector} from 'react-redux';
 import ApiCall from '../Redux/Home/action';
 import {useNavigation} from '@react-navigation/native';
-import { rendring } from '../Utils/ReuseableFun';
 
 
+const rendring = (item, navigation) => {
 
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('detail', item)}
+      activeOpacity={0.7}
+      style={styles.cards}>
+      <Text style={styles.cardHeaderText}>{item.user.name}</Text>
+      <Image style={styles.cardsImage} source={{uri: item.urls.small}} />
+    </TouchableOpacity>
+  );
+};
 
 
 const Render = props => {
