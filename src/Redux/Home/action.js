@@ -17,7 +17,7 @@ const ApiCall = (text,CallBackFun) => {
 
       axios
       .get(
-        `https://api.unsplash.com/search/photos?page=${Page}&query=${text}&per_page=30&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`
+        `https://api.unsplash.com/search/photos?page=${Page}&query=${text}&per_page=10&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`
       )
       .then(resp => {
 

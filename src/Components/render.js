@@ -10,27 +10,15 @@ import styles from '../Utils/Style';
 import {useDispatch, useSelector} from 'react-redux';
 import ApiCall from '../Redux/Home/action';
 import {useNavigation} from '@react-navigation/native';
-
-
-const rendring = (item, navigation) => {
-
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('detail', item)}
-      activeOpacity={0.7}
-      style={styles.cards}>
-      <Text style={styles.cardHeaderText}>{item.user.name}</Text>
-      <Image style={styles.cardsImage} source={{uri: item.urls.small}} />
-    </TouchableOpacity>
-  );
-};
-
+import detailStyle from '../Screen/Detail/style';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import {  CommonRatingView } from '../Utils/CommonFuntions';
 
 const Render = props => {
 
   const navigation = useNavigation();
   const [isloading, setIsLoading] = useState(true);
-  const reff=useRef(null);
   const {Page, myText} = useSelector(store => store.HomeReducer);
   const dispatch = useDispatch();
 
@@ -39,37 +27,56 @@ const Render = props => {
     dispatch(ApiCall(myText,(value)=>setIsLoading(value)))
   }
 
+
+ 
+  const rendrItems = (item) => {
+
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('detail', item)}
+        activeOpacity={0.7}
+        style={styles.cards}>
+
+        <Image style={styles.cardsImage} source={{uri: item.user.profile_image.large}}/>
+        <View style={styles.innerCard}>
+        <Text style={styles.cardHeaderText}>{item.user.name}</Text>
+        <Text style={styles.locationText}>{item.user.location}</Text>
+
+        <View style={styles.ratingView}>
+
+        <CommonRatingView numbers={item.user.total_likes} label={'Likes'} />
+        <CommonRatingView numbers={item.user.total_photos} label={'Photos'} />
+        <CommonRatingView numbers={item.user.total_collections} label={'Collections'} />
+
+        </View>
+       
+        </View>
+
+        
+        
+       
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.flatListView}>
       <FlatList
         data={props.data}
-        
+      
         keyExtractor={(item, index) => item.id + index}
 
-        renderItem={({item}) => rendring(item, navigation)}
+        renderItem={({item}) => rendrItems(item)}
 
         ListFooterComponent={
           ((isloading===false)?<ActivityIndicator size={'large'} color='grey'/>:<View></View>)
         }
-        ListEmptyComponent={
-          ()=>{
-            return(
-              <View style={styles.main}>
-                <ActivityIndicator size="large" color="grey" />
-                </View>
-            )
-          }
-        }
         onEndReached={() => {isloading? DispatchFun():dispatch(ApiCall(myText,(value)=>setIsLoading(value)))}
       }
-        ref={reff}
+        ref={props.reff}
         onEndReachedThreshold={0.8}
       />
-      <TouchableOpacity style={styles.btnSty} onPress={()=>{
-        reff.current.scrollToOffset({offset:0});
-      }}>
-        <Text>GoTop</Text>
-      </TouchableOpacity>
+    
     </View>
   );
 };

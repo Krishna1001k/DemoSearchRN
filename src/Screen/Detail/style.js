@@ -1,14 +1,23 @@
 import {StyleSheet, Dimensions} from 'react-native';
 const {height, width} = Dimensions.get('screen');
 import { color } from '../../Utils/color';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
+const StatusBarHeight=getStatusBarHeight();
+
 const detailStyle = StyleSheet.create({
+  main:{
+    flex:1,
+        paddingTop:StatusBarHeight-5,
+        alignItems:'center',
+        backgroundColor:color.primary,
+  },
   detailView: {
-    height: height / 2.5,
-    width: width / 1.1,
+    height: height / 2,
+    width: width / 1.08,
     borderRadius:5,
     overflow: 'hidden',
     alignItems:'center',
-    margin: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -36,30 +45,19 @@ const detailStyle = StyleSheet.create({
       marginRight:110,
     
   },
+ 
   detailText:{
-      fontSize:20,
-      fontWeight:'700'
+      fontSize:30,
+      fontWeight:'800',
+      position:'absolute',
+      top:40,
   },
   userDtailView:{
-      height:height/4,
+      height:height/5,
       width:width/1.1,
-
-      borderRadius:10,
-      paddingVertical:5,
-      paddingHorizontal:15,
-      position: 'absolute',
-      top:450,
+      paddingVertical:50,
       alignItems:'center',
-      backgroundColor:color.lightAqua,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 4,
-      },
-      shadowOpacity: 0.3,
-      shadowRadius: 4.65,
-
-      elevation: 8,
+     
   },
   bioText:{
       marginVertical:5,
@@ -68,8 +66,39 @@ const detailStyle = StyleSheet.create({
   },
   activityStyle:{
     position:'absolute',
-    top:100,
-  }
+    top:200,
+  },
+  viewStyle:{
+    borderTopLeftRadius:30,
+    borderTopRightRadius:30,
+    backgroundColor:'#E4FBFF',
+    paddingHorizontal:15,
+    width:width,
+    height: height/1.18,
+  },
+  detailRatingView:{
+    flexDirection:'row',
+    width:'100%',
+    height:65,
+    paddingHorizontal:50,
+    marginVertical:5,
+    justifyContent:'space-around',
+},
+image:{
+  height:'100%',
+  width:width,
+},
+descriptionView:{
+  height: '15%',
+  width:width/1.081,
+  justifyContent:'center',
+  alignItems:'center',
+},
+descriptionText:{
+  fontSize:20,
+  fontWeight:'500',
+
+}
 
 
 });
