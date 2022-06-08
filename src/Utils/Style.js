@@ -17,17 +17,25 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
     },
     cards:{
+        flexDirection:'row',
         marginVertical:15,
-        height: height/4.4,
+        height: height/8,
         backgroundColor:color.primary,
         alignItems:'center',
-        justifyContent:'center',
+        justifyContent:'space-around',
         borderRadius:10,
         overflow: 'hidden',
+
     },
-    cardsImage:{
-        height: 85,
-        width: '25%',
+    cardImage:{
+        height:'80%',
+        width: '35%',
+        borderRadius:10,
+        resizeMode:'cover'
+    },
+    profileImage:{
+        height: 95,
+        width: '24%',
         borderRadius:50,
         position: 'relative',
         top:40,
@@ -38,6 +46,20 @@ const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:'700',
     },
+    userDetailView:{
+        width:'55%',
+        height: '80%',
+        alignItems:'center',
+        // justifyContent:'space-around',
+        paddingHorizontal:10,
+        // backgroundColor:'red'
+    },
+    userNameText:{
+        fontSize:20,
+        fontWeight:'700',
+        marginVertical:5,
+    },
+
     numberText:{
         fontWeight:'700',
     },
@@ -62,20 +84,38 @@ const styles = StyleSheet.create({
     locationText:{
         color:'grey',
         fontWeight:'600',
+        marginVertical:5,
     },
 
     innerCard:{
         // flexDirection:'row',
-        paddingHorizontal:10,
-        paddingTop:24,
+        // paddingHorizontal:10,
+        // paddingTop:24,
+        marginTop:100,
         alignItems:'center',
         justifyContent:'center',
         overflow:'hidden',
-        height: "90%",
+        height: "80%",
         width: '90%',
         borderTopLeftRadius:30,
         borderTopRightRadius:30,
+        borderBottomLeftRadius:30,
+        borderBottomRightRadius:30,
         backgroundColor:'#E4FBFF'
+    },
+    social:{
+        flexDirection:'row',
+        width:'70%',
+        marginVertical:3,
+    },
+    socialText:{
+        marginLeft:5,
+        fontSize:15,
+        fontWeight:'600',
+    },
+    hashTagText:{
+        color:'blue',
+        marginVertical:8,
     },
     btnSty:{
         backgroundColor:color.primaryWhite,

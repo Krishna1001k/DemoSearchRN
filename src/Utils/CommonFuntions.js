@@ -11,3 +11,13 @@ export const CommonRatingView = (props) => {
         </View>
     )
    }
+
+export const SocailView = (props) => { 
+  const Icons=props.Icon
+    return(
+      <View style={styles.social}>
+        <Icons name={props.label} size={18}/>
+          <Text style={styles.socialText}>{props.socialName}</Text>
+        </View>
+    )
+   }

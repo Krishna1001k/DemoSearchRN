@@ -13,8 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import detailStyle from '../Screen/Detail/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Ionicon from 'react-native-vector-icons/Ionicons'
-import {  CommonRatingView } from '../Utils/CommonFuntions';
-
+import { SocailView } from '../Utils/CommonFuntions';
 const Render = props => {
 
   const navigation = useNavigation();
@@ -36,23 +35,23 @@ const Render = props => {
         onPress={() => navigation.navigate('detail', item)}
         activeOpacity={0.7}
         style={styles.cards}>
-
-        <Image style={styles.cardsImage} source={{uri: item.user.profile_image.large}}/>
-        <View style={styles.innerCard}>
-        <Text style={styles.cardHeaderText}>{item.user.name}</Text>
-        <Text style={styles.locationText}>{item.user.location}</Text>
-
-        <View style={styles.ratingView}>
-
-        <CommonRatingView numbers={item.user.total_likes} label={'Likes'} />
-        <CommonRatingView numbers={item.user.total_photos} label={'Photos'} />
-        <CommonRatingView numbers={item.user.total_collections} label={'Collections'} />
-
-        </View>
-       
-        </View>
-
         
+        <Image style={styles.cardImage} source={{uri:item.urls.small}}/>
+        
+        <View style={styles.userDetailView}>
+          <Text numberOfLines={1}  style={styles.userNameText}> {item.user.name}</Text>
+
+          <Text numberOfLines={1} style={styles.locationText} > {item.user.location}</Text>
+
+          {item.tags.length>0&&<Text style={styles.hashTagText}>{`#${item.tags[0].title}`}</Text>}
+
+
+          {/* {item.tags.length>1&&<Text>{`#${item.tags[1].title}`}</Text>} */}
+          
+          {/* <SocailView label='logo-instagram' Icon={Ionicon} socialName={item.user.social.instagram_username}/> */}
+          
+        </View>
+      
         
        
       </TouchableOpacity>

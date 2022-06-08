@@ -14,7 +14,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CommonRatingView} from '../../Utils/CommonFuntions';
 
 const Detail = () => {
-  const [numLine, setNumLines] = useState(2);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
@@ -67,7 +66,7 @@ const Detail = () => {
       <Text style={detailStyle.detailText}>Profile Details</Text>
 
       <Image
-        style={styles.cardsImage}
+        style={styles.profileImage}
         source={{uri: user.profile_image.large}}
       />
       <View style={detailStyle.viewStyle}>

@@ -22,7 +22,7 @@ const Home = () => {
     let timer;
     return (...args) => {
       clearTimeout(timer)
-      timer = setTimeout(() => {func.apply(this, args)}, timeout);
+      timer = setTimeout(() => {func(args[0])}, timeout);
     }
   }
 
@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <View style={styles.main}>
-      <Text style={HomeStyle.headerText}>Profiles List</Text>
+      <Text style={HomeStyle.headerText}>Photos List</Text>
 
       <View style={HomeStyle.searchView}>
         <View style={HomeStyle.search}>
