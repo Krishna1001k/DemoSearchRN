@@ -1,7 +1,9 @@
 const initialState={
     ApiData:[],
     Page:1,
-    myText:'photo'
+    myText:'photo',
+    mainLoading:false,
+    listLoading:false,
     
 }
 
@@ -14,6 +16,10 @@ const HomeReducer=(state=initialState,action)=>{
         case "PAGE":
             return{...state,...payload}
         case "SET_TEXT":
+            return{...state,...payload}
+        case "SET_MAINLOAD":
+            return{...state,...payload}
+        case "SET_LISTLOAD":
             return{...state,...payload}
         default:
             return{...state}

@@ -8,33 +8,37 @@ import FlatListRenderView from '../../Components/render';
 import IconAntDesign from 'react-native-vector-icons/AntDesign'
 
 const Home = () => {
+
   const dispatch = useDispatch();
-  const [text,setText]=useState('');
-  const reff=useRef(0)
-  const {ApiData, Page} = useSelector(store => store.HomeReducer);
+  const reff=useRef(null)
+  const {ApiData, Page,mainLoading} = useSelector(store => store.HomeReducer);
 
 
   useEffect(() => {
     dispatch( ApiCall( 'photo',value => console.log(value)))
   }, []);
 
+
+
   function debounce(func, timeout = 1000) {
     let timer;
-    return (...args) => {
-      clearTimeout(timer)
-      timer = setTimeout(() => {func(args[0])}, timeout);
-    }
+    return (txt) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(txt)                         
+      }, timeout);
+    };
   }
 
   const helperFun = useCallback(
-    debounce(txt =>
-      dispatch(ApiCall(txt,(bool) =>{bool?console.log(bool):dispatch({type: 'ADD_DATA', payload:{ApiData:[]}})}),
-
-      ),
-     
-    ),
-    [],
-  );
+    debounce(txt =>{
+      if(!mainLoading){
+        dispatch({type: 'ADD_DATA', payload: {ApiData: []}})
+      }
+      dispatch(ApiCall(txt))
+      // reff.current.scrollToOffset({offset: 0})
+    }
+    ),[]);
   
 
   return (
@@ -45,11 +49,12 @@ const Home = () => {
         <View style={HomeStyle.search}>
           <TextInput
             placeholder="Search"
+            onFocus={()=>{
+              reff.current.scrollToOffset({offset: 0});
+            }}
             onChangeText={txt => {
               helperFun(txt),
-                setText(txt),
                 dispatch({type: 'PAGE', payload: {Page: 1}});
-                // reff.current.scrollToOffset({offset: 0})
             }}
           />
         </View>

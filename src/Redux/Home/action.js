@@ -1,38 +1,51 @@
 import axios from 'axios';
 
-const ApiCall = (text,CallBackFun) => {
+const ApiCall = (text) => {
 
-
+// console.log('afeteradfasdfasfafdasdfasf    ' +text);
   return (dispatch, getState) => {
+    const {
+      HomeReducer: {ApiData, Page, myText, mainLoading, listLoading},
+    } = getState();
 
+    if (text === '' || text === undefined) text = 'photo';
 
-    const {HomeReducer: {ApiData, Page,myText}} = getState()
+    console.log(text, myText, ApiData, Page, mainLoading, listLoading);
 
-    if(text===''||text===undefined) text='photo'
+    console.log('apihit');
 
-    console.log(text,myText, ApiData, Page)
-
-
-      console.log('apihit');
-
-      axios
+    axios
       .get(
-        `https://api.unsplash.com/search/photos?page=${Page}&query=${text}&per_page=10&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`
+        `https://api.unsplash.com/search/photos?page=${Page}&query=${text}&per_page=10&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`,
       )
       .then(resp => {
-
         console.log('Api Hit Success');
-        ApiData&&Page>1
-          ? dispatch({type: 'ADD_DATA',payload:{ApiData: [...ApiData, ...resp.data.results]}})
-          : dispatch({type: 'ADD_DATA', payload: {ApiData: resp.data.results}});
 
-          dispatch({type:'SET_TEXT',payload:{myText:text}})
+  
+          if (ApiData.length > 0 && Page > 1) {
+            dispatch({type: 'ADD_DATA',payload: {ApiData: [...ApiData, ...resp.data.results]}})
+             dispatch({type: 'SET_LISTLOAD', payload: {listLoading: false}});
+             console.log('listData set');
+  
+          } else {
+            console.log('maindata set');
+          dispatch({type: 'ADD_DATA', payload: {ApiData: resp.data.results}});
+          }
+  
+        
 
-          CallBackFun(true) 
+       
+        dispatch({type: 'SET_TEXT', payload: {myText: text}});
+        dispatch({type: 'SET_MAINLOAD', payload: {mainLoading: false}});
 
       })
 
-      .catch(err => {CallBackFun(false),console.log(err)})}
+      .catch(err => {
+        dispatch({type:'SET_MAINLOAD',payload:{mainLoading:false}})
+
+        console.log(err);
+      });
+  };
   };
 
 

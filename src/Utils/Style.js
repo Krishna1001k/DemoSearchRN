@@ -6,8 +6,9 @@ const {height,width}=Dimensions.get('screen')
 const styles = StyleSheet.create({
 
     main:{
+        backgroundColor:color.primary,
         flex:1,
-        paddingTop:StatusBarHeight-5,
+        paddingTop:StatusBarHeight,
         alignItems:'center',
     },
     flatListView:{
@@ -128,7 +129,9 @@ const styles = StyleSheet.create({
         borderRadius:30,
         justifyContent:'center',
         alignItems:'center',
-    }    
+    },
+   
+
 })
 
 export default styles

@@ -4,62 +4,43 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  FlatList,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../../Utils/Style';
 import detailStyle from './style';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CommonRatingView} from '../../Utils/CommonFuntions';
+import {useSelector, useDispatch} from 'react-redux';
+import PhotosListApiCall from '../../Redux/Detail/action';
+import renderItems from '../../Components/renderItems';
 
 const Detail = () => {
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
+  const {photosList, page,photosListLoader} = useSelector(store => store.DetailReducer);
+
+  const dispatch = useDispatch();
+
   const {
-    params: {urls, user,alt_description},
+    params: {urls, user, alt_description},
   } = useRoute();
 
+  useEffect(() => {
+    dispatch(PhotosListApiCall(user));
+  }, []);
 
-  const onLoading = value => {
-    setLoading(value);
-  };
-
-  const thumbImageViewFun = () => {
-    return (
-      <View style={detailStyle.detailView}>
-        <Image style={detailStyle.image} source={{uri: urls.thumb}} />
-        <ActivityIndicator
-          style={detailStyle.activityStyle}
-          size={'large'}
-          color={'grey'}
-        />
-      </View>
-    );
-  };
-
-  const fullImageViewFun = () => {
-    return (
-      <View style={detailStyle.detailView}>
-        <Image
-          style={detailStyle.image}
-          source={{uri: urls.full}}
-          onLoadStart={() => onLoading(true)}
-          onLoadEnd={() => onLoading(false)}
-        />
-      </View>
-    );
-  };
-
-
-
- 
   return (
     <View style={detailStyle.main}>
       <TouchableOpacity
         style={detailStyle.backArrowView}
-        onPress={() => navigation.goBack()}>
+        onPress={() => {
+          dispatch({type: 'INCREASE_PAGE', payload:{page:1}}),
+          dispatch({type:"ADD_LIST",payload:{photosList:[]}}),
+          navigation.goBack()
+          }}>
         <Ionicons name={'arrow-back'} size={35} />
       </TouchableOpacity>
 
@@ -69,8 +50,11 @@ const Detail = () => {
         style={styles.profileImage}
         source={{uri: user.profile_image.large}}
       />
+
+
       <View style={detailStyle.viewStyle}>
         <View style={detailStyle.userDtailView}>
+
           <Text style={styles.cardHeaderText}>{user.name}</Text>
           <Text style={styles.locationText}>{user.location}</Text>
 
@@ -83,13 +67,29 @@ const Detail = () => {
             />
           </View>
         </View>
-        {loading&&thumbImageViewFun()}{
-          fullImageViewFun()
-        }
-        <View style={detailStyle.descriptionView}>
-          <Text>Description</Text>
-          <Text style={detailStyle.descriptionText}>{alt_description}</Text>
-        </View>
+
+        <FlatList
+          data={photosList}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          contentContainerStyle={detailStyle.flatListStyle}
+          keyExtractor={(item,index)=>item.id+index}
+
+          renderItem={({item}) => renderItems(item)}
+          numColumns={3}
+          onEndReached={() => {
+            console.log('onEndReached run');
+            console.log('page: ', page);
+
+            if(!photosListLoader){
+              dispatch({type: 'INCREASE_PAGE', payload:{page:page+1}});
+              dispatch({type: 'LOADER', payload:{photosListLoader:true}});
+              dispatch(PhotosListApiCall(user));
+            }
+           
+          }}
+          onEndReachedThreshold={0.5}
+        />
       </View>
     </View>
   );
