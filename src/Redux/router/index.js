@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import Splash from '../../Screen/Splash'
 import Home from '../../Screen/Home'
 import Detail from '../../Screen/Detail'
+import LoginScreen from '../../Screen/Login/LoginScreen'
 
 
 const Route = () => {
@@ -15,6 +16,7 @@ const Route = () => {
             <Stack.Screen name='splash' component={Splash}/>
             <Stack.Screen name='home' component={Home}/>
             <Stack.Screen name='detail' component={Detail}/>
+            <Stack.Screen name='login' component={LoginScreen}/>
         </Stack.Navigator>
     </NavigationContainer>
   )

@@ -55,8 +55,8 @@ const Detail = () => {
       <View style={detailStyle.viewStyle}>
         <View style={detailStyle.userDtailView}>
 
-          <Text style={styles.cardHeaderText}>{user.name}</Text>
-          <Text style={styles.locationText}>{user.location}</Text>
+          <Text numberOfLines={1} style={styles.cardHeaderText}>{user.name}</Text>
+          <Text numberOfLines={1} style={styles.locationText}>{user.location}</Text>
 
           <View style={detailStyle.detailRatingView}>
             <CommonRatingView numbers={user.total_likes} label={'Likes'} />

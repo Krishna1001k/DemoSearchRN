@@ -59,6 +59,7 @@ const Render = props => {
           listLoading&&<ActivityIndicator size={'large'} color="grey" />
         }
         onEndReached={() => {
+          console.log('HomeOnEndReached   page:',Page , listLoading );
           if(listLoading===false){
             dispatch({type: 'SET_LISTLOAD', payload: {listLoading: true}});
             dispatch({type:"PAGE", payload:{Page:Page+1}})

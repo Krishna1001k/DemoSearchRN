@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const ApiCall = (text) => {
+const ApiCall =  (text) => {
 
-// console.log('afeteradfasdfasfafdasdfasf    ' +text);
   return (dispatch, getState) => {
     const {
       HomeReducer: {ApiData, Page, myText, mainLoading, listLoading},
@@ -41,6 +40,7 @@ const ApiCall = (text) => {
       })
 
       .catch(err => {
+        
         dispatch({type:'SET_MAINLOAD',payload:{mainLoading:false}})
 
         console.log(err);

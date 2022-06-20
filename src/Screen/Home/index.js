@@ -5,10 +5,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import ApiCall from '../../Redux/Home/action';
 import HomeStyle from './style';
 import FlatListRenderView from '../../Components/render';
-import IconAntDesign from 'react-native-vector-icons/AntDesign'
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
-
+const navigation=useNavigation();
   const dispatch = useDispatch();
   const reff=useRef(null)
   const {ApiData, Page,mainLoading} = useSelector(store => store.HomeReducer);
@@ -34,27 +35,26 @@ const Home = () => {
     debounce(txt =>{
       if(!mainLoading){
         dispatch({type: 'ADD_DATA', payload: {ApiData: []}})
+        dispatch({type: 'PAGE', payload: {Page: 1}});
       }
       dispatch(ApiCall(txt))
-      // reff.current.scrollToOffset({offset: 0})
     }
     ),[]);
   
 
   return (
     <View style={styles.main}>
+      <TouchableOpacity onPress={()=>navigation.navigate('login')}>
       <Text style={HomeStyle.headerText}>Photos List</Text>
+
+      </TouchableOpacity>
 
       <View style={HomeStyle.searchView}>
         <View style={HomeStyle.search}>
           <TextInput
             placeholder="Search"
-            onFocus={()=>{
-              reff.current.scrollToOffset({offset: 0});
-            }}
             onChangeText={txt => {
-              helperFun(txt),
-                dispatch({type: 'PAGE', payload: {Page: 1}});
+              helperFun(txt)
             }}
           />
         </View>
