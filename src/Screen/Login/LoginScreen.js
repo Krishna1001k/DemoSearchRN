@@ -1,39 +1,51 @@
-import { View, Text,TouchableOpacity } from 'react-native'
-import React from 'react'
-import auth from '@react-native-firebase/auth';
-import { GoogleSignin,GoogleSigninButton } from '@react-native-google-signin/google-signin'
-
-GoogleSignin.configure({
-    webClientId: '270302728780-sghtitrnkatc5t5monte52v3emp00bp4.apps.googleusercontent.com',
-  });
-
-  async function onGoogleButtonPress() {
-    // Get the users ID token
-   const { idToken } = await GoogleSignin.signIn();
-  
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
-  }
+import React,{useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import styles from '../../Utils/Style';
+import loginStyles from './LoginStyle';
+import CommonInput from '../../Components/CommonInput';
+import CommonButton from '../../Components/CommonButton';
+import { SignIn } from '../../Utils/CommonAuthFun';
+import {useNavigation} from '@react-navigation/native';
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
+  const [cred, setCred] = useState({
+    email: '',
+    password: '',
+  });
+
   return (
-    <View>
-      <TouchableOpacity>
-        <Text>google</Text>
-      </TouchableOpacity>
-      <Text>LoginScreen</Text>
-      <GoogleSigninButton
-        onPress={() =>
-          onGoogleButtonPress().then(() =>
-            console.log('Signed in with Google!'),
-          ).catch(err=>console.log('error occured',err))
+    <View style={styles.main}>
+      <Text style={loginStyles.headerText}>Sign In</Text>
+
+      <View style={loginStyles.formContainer}>
+        <CommonInput
+          callbackFun={value => setCred({...cred, ...{email: value}})}
+          placeholder={'Email'}
+        />
+        <CommonInput
+          callbackFun={value => setCred({...cred, ...{password: value}})}
+          placeholder={'Password'}
+        />
+      </View>
+
+      <CommonButton
+        onPressFun={() =>
+          SignIn(cred.email, cred.password, val => console.log(val))
         }
+        style={loginStyles.btnStyle}
+        textStyle={loginStyles.btnText}
+        label={'Sign In'}
       />
+
+      <View style={loginStyles.bottomTextContainer}>
+        <Text>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('signUp')}>
+          <Text style={loginStyles.bottomTouchableText}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
-}
+};
 
-export default LoginScreen
+export default LoginScreen;

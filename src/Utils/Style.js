@@ -130,6 +130,17 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
+    TextInputView:{
+        height:height/16,
+        borderWidth:0.3,
+        width:width/1.25,
+        borderRadius:5,
+        marginVertical:10,
+        justifyContent:'center',
+        backgroundColor:color.primaryWhite,
+        paddingHorizontal:10,
+    }
+
    
 
 })

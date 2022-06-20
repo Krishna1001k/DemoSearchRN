@@ -5,6 +5,7 @@ export const color ={
     lightPink:'#FEE3EC',
     primary:'#CDF0EA',
     primaryWhite:'white',
+    Button:'#187498',
 }
 
 

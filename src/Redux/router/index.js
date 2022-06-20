@@ -6,6 +6,7 @@ import Splash from '../../Screen/Splash'
 import Home from '../../Screen/Home'
 import Detail from '../../Screen/Detail'
 import LoginScreen from '../../Screen/Login/LoginScreen'
+import SignUpScreen from '../../Screen/SignUp/SignUpScreen'
 
 
 const Route = () => {
@@ -14,9 +15,11 @@ const Route = () => {
     <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown:false}}>
             <Stack.Screen name='splash' component={Splash}/>
+            <Stack.Screen name='login' component={LoginScreen}/>
+            <Stack.Screen name='signUp' component={SignUpScreen}/>
             <Stack.Screen name='home' component={Home}/>
             <Stack.Screen name='detail' component={Detail}/>
-            <Stack.Screen name='login' component={LoginScreen}/>
+            
         </Stack.Navigator>
     </NavigationContainer>
   )
