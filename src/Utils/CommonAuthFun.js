@@ -6,23 +6,28 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 // .....................................SinginEmail&Pass.........................................
 
-export const SignUp = (email,pass,successCall) => {
-    auth()
-      .createUserWithEmailAndPassword(email, pass)
-      .then(res => successCall(res))
-      .catch(err => {
-        console.error(err);
-      });
+export const SignUp = async (email,pass,successCallBack,failureCallBack) => {
+  try {
+    let response = await auth().createUserWithEmailAndPassword(email, pass)
+    successCallBack(response)
+  } catch (error){
+    failureCallBack(error.code)
+  }
+     
   };
   
-  export const SignIn = (email, pass,successCall) => {
-    auth()
-      .signInWithEmailAndPassword(email, pass)
-      .then(res => successCall(res))
-      .catch(err => {
-        console.error(err);
-      })
-  };
+  export const SignIn = async (email, pass,successCallBack,failureCallBack) => {
+    try{
+      let response= await auth().signInWithEmailAndPassword(email, pass)
+      successCallBack(response)
+    }
+    catch (error){
+      console.log(error);
+      // failureCallBack(error.code)
+    }
+   
+    
+  }
   
 // .....................................GoogleSingin.........................................
 

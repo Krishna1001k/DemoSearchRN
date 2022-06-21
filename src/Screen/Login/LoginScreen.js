@@ -1,12 +1,12 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../../Utils/Style';
 import loginStyles from './LoginStyle';
 import CommonInput from '../../Components/CommonInput';
 import CommonButton from '../../Components/CommonButton';
-import { SignIn } from '../../Utils/CommonAuthFun';
+import {SignIn} from '../../Utils/CommonAuthFun';
 import {useNavigation} from '@react-navigation/native';
-
+import ErrorHandling from '../../Utils/ErrorHandling';
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [cred, setCred] = useState({
@@ -31,7 +31,18 @@ const LoginScreen = () => {
 
       <CommonButton
         onPressFun={() =>
-          SignIn(cred.email, cred.password, val => console.log(val))
+          SignIn(
+            cred.email,
+            cred.password,
+            userData => {
+              if(userData){
+                navigation.replace('home')
+              }
+              
+              },
+              
+            err => ErrorHandling(err),
+          )
         }
         style={loginStyles.btnStyle}
         textStyle={loginStyles.btnText}

@@ -6,6 +6,7 @@ import loginStyles from '../Login/LoginStyle';
 import {SignUp} from '../../Utils/CommonAuthFun';
 import styles from '../../Utils/Style';
 import {useNavigation} from '@react-navigation/native';
+import ErrorHandling from '../../Utils/ErrorHandling';
 const SignUpScreen = () => {
   const navigation = useNavigation();
   const [cred, setCred] = useState({
@@ -26,9 +27,18 @@ const SignUpScreen = () => {
         />
       </View>
       <CommonButton
-        onPressFun={() =>
-          SignUp(cred.email, cred.password, val => console.log(val))
-        }
+        onPressFun={() => {
+          SignUp(
+            cred.email,
+            cred.password,
+            userData =>{
+              if(userData){
+                navigation.replace('login')
+              }
+            },
+            error => ErrorHandling(error),
+          );
+        }}
         style={loginStyles.btnStyle}
         textStyle={loginStyles.btnText}
         label={'Sign Up'}
