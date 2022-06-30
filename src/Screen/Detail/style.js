@@ -1,11 +1,10 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import { color } from '../../Utils/color';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {color} from '../../Utils/color';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-const StatusBarHeight=getStatusBarHeight();
+const StatusBarHeight = getStatusBarHeight();
 
 const {height, width} = Dimensions.get('screen');
-
 
 const detailStyle = StyleSheet.create({
   main: {
@@ -31,13 +30,11 @@ const detailStyle = StyleSheet.create({
     elevation: 8,
   },
   backArrowView: {
-    height: '5%',
-    width: '10%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    left: 10,
-    top: 40,
+    // height: '5%',
+    // width: '10%',
+    // alignItems: 'center',
+    // position: 'relative',
+    // left: 10,
     zIndex: 1,
   },
   backArrow: {
@@ -48,9 +45,10 @@ const detailStyle = StyleSheet.create({
 
   detailText: {
     fontSize: 30,
-    fontWeight: '800',
-    position: 'absolute',
-    top: 40,
+    fontWeight: '700',
+    letterSpacing: 1,
+    // position: 'relative',
+    // left: 30,
   },
   userDtailView: {
     height: height / 5,
@@ -74,8 +72,7 @@ const detailStyle = StyleSheet.create({
     paddingHorizontal: 15,
     width: width,
     height: height / 1.18,
-    paddingBottom:25,
-
+    paddingBottom: 25,
   },
   detailRatingView: {
     flexDirection: 'row',
@@ -100,26 +97,24 @@ const detailStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
   },
-  flatListStyle:{
-    backgroundColor:'white',
-    width:width/1.09,
-    paddingHorizontal:3,
-
+  flatListStyle: {
+    backgroundColor: 'white',
+    width: width / 1.09,
+    paddingHorizontal: 3,
   },
   renderView: {
     backgroundColor: 'lightgrey',
-    height:height/5,
-    width: width/3.5,
-    marginHorizontal:3,
-    marginVertical:5,
+    height: height / 5,
+    width: width / 3.5,
+    marginHorizontal: 3,
+    marginVertical: 5,
     overflow: 'hidden',
-
   },
   renderImage: {
-    height:"100%",
-    width:'100%',
-    borderRadius:5,
-    borderWidth:0.3,
+    height: '100%',
+    width: '100%',
+    borderRadius: 5,
+    borderWidth: 0.3,
   },
 });
 

@@ -7,7 +7,7 @@ import Home from '../../Screen/Home'
 import Detail from '../../Screen/Detail'
 import LoginScreen from '../../Screen/Login/LoginScreen'
 import SignUpScreen from '../../Screen/SignUp/SignUpScreen'
-
+import SettingScreen from '../../Screen/setting'
 
 const Route = () => {
     const Stack =createNativeStackNavigator();
@@ -19,7 +19,7 @@ const Route = () => {
             <Stack.Screen name='signUp' component={SignUpScreen}/>
             <Stack.Screen name='home' component={Home}/>
             <Stack.Screen name='detail' component={Detail}/>
-            
+            <Stack.Screen name='setting' component={SettingScreen}/>
         </Stack.Navigator>
     </NavigationContainer>
   )

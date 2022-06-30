@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity,Image} from 'react-native';
 import React, {useState} from 'react';
 import CommonInput from '../../Components/CommonInput';
 import CommonButton from '../../Components/CommonButton';
@@ -7,16 +7,26 @@ import {SignUp} from '../../Utils/CommonAuthFun';
 import styles from '../../Utils/Style';
 import {useNavigation} from '@react-navigation/native';
 import ErrorHandling from '../../Utils/ErrorHandling';
+import images from '../../Utils/images';
 const SignUpScreen = () => {
   const navigation = useNavigation();
   const [cred, setCred] = useState({
+    name: '',
     email: '',
     password: '',
+    confrimPassword: '',
   });
   return (
     <View style={styles.main}>
-      <Text style={loginStyles.headerText}>Sign Up</Text>
-      <View style={loginStyles.formContainer}>
+      <Text style={styles.headerText}>Sign Up</Text>
+      <View style={styles.loginImageView}>
+
+    <Image source={images.loginScreenImage} style={styles.loginImage} />
+
+
+    </View>
+      <View style={styles.formContainer}>
+    
         <CommonInput
           callbackFun={value => setCred({...cred, ...{email: value}})}
           placeholder={'Email'}
@@ -25,6 +35,7 @@ const SignUpScreen = () => {
           callbackFun={value => setCred({...cred, ...{password: value}})}
           placeholder={'Password'}
         />
+  
       </View>
       <CommonButton
         onPressFun={() => {
@@ -39,15 +50,15 @@ const SignUpScreen = () => {
             error => ErrorHandling(error),
           );
         }}
-        style={loginStyles.btnStyle}
-        textStyle={loginStyles.btnText}
+        style={styles.btnStyle}
+        textStyle={styles.btnText}
         label={'Sign Up'}
       />
 
-      <View style={loginStyles.bottomTextContainer}>
+      <View style={styles.bottomTextContainer}>
         <Text>Don't have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('login')}>
-          <Text style={loginStyles.bottomTouchableText}>Sign In</Text>
+          <Text style={styles.bottomTouchableText}>Sign In</Text>
         </TouchableOpacity>
       </View>
     </View>
