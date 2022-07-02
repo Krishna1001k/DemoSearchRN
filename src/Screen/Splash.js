@@ -19,7 +19,7 @@ const Splash = () => {
     },[])
   return (
     <View style={{flex:1}}>
-      <Image source={require('../Assets/Imges/splash.jpeg')}/>
+      <Image  source={require('../Assets/Imges/splash.jpeg')}/>
     </View>
   )
 }

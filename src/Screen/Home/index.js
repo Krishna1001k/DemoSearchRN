@@ -13,6 +13,7 @@ import HomeStyle from './style';
 import FlatListRenderView from '../../Components/render';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import debounce from '../../Utils/debounceFunction';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -24,26 +25,15 @@ const Home = () => {
     dispatch(ApiCall('photo', value => console.log(value)));
   }, []);
 
-  function debounce(func, timeout = 1000) {
-    let timer;
-    return txt => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func(txt);
-      }, timeout);
-    };
-  }
 
-  const helperFun = useCallback(
-    debounce(txt => {
+  const helperFun = debounce(txt => {
       if (!mainLoading) {
         dispatch({type: 'ADD_DATA', payload: {ApiData: []}});
         dispatch({type: 'PAGE', payload: {Page: 1}});
       }
       dispatch(ApiCall(txt));
-    }),
-    [],
-  );
+    })
+  
 
   return (
     <View style={styles.main}>

@@ -7,7 +7,7 @@ import Home from '../../Screen/Home'
 import Detail from '../../Screen/Detail'
 import LoginScreen from '../../Screen/Login/LoginScreen'
 import SignUpScreen from '../../Screen/SignUp/SignUpScreen'
-import SettingScreen from '../../Screen/setting'
+import SettingScreen from '../../Screen/Setting'
 
 const Route = () => {
     const Stack =createNativeStackNavigator();

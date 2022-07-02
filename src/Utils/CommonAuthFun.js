@@ -23,7 +23,7 @@ export const SignUp = async (email,pass,successCallBack,failureCallBack) => {
     }
     catch (error){
       console.log(error);
-      // failureCallBack(error.code)
+      failureCallBack(error.code)
     }
    
     
