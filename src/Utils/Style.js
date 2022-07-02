@@ -129,15 +129,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  TextInput:{
+    height: height /16,
+   flex:1,
+   justifyContent:'center',
+   alignItems:'center',
+
+  
+  },
+  TextInputInnerView:{
+    flexDirection:'row',
+    alignItems:'center',
+
+  },
   TextInputView: {
-    height: height / 16,
+    width:width/1.25,
+   justifyContent:'flex-end',
     borderWidth: 0.3,
-    width: width / 1.25,
     borderRadius: 5,
     marginVertical: 10,
-    justifyContent: 'center',
     backgroundColor: color.primaryWhite,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10, 
   },
   headerText: {
     fontSize: 30,
@@ -189,6 +201,11 @@ const styles = StyleSheet.create({
     height: height / 6,
     width: width / 2.8,
   },
+  errorText:{
+    color:'red',
+    height:15,
+  },
+  
 });
 
 export default styles;

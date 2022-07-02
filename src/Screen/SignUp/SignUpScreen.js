@@ -1,50 +1,74 @@
-import {View, Text, TouchableOpacity,Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import CommonInput from '../../Components/CommonInput';
 import CommonButton from '../../Components/CommonButton';
-import loginStyles from '../Login/LoginStyle';
 import {SignUp} from '../../Utils/CommonAuthFun';
 import styles from '../../Utils/Style';
 import {useNavigation} from '@react-navigation/native';
 import ErrorHandling from '../../Utils/ErrorHandling';
 import images from '../../Utils/images';
+import debounce from '../../Utils/debounceFunction';
+import {CheckVlaidation} from '../../Utils/validation';
+
 const SignUpScreen = () => {
   const navigation = useNavigation();
-  const [cred, setCred] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confrimPassword: '',
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPassword, setValidPassword] = useState(false);
+
+  const helperFun = debounce((txt, type) => {
+    if (type === 'email') {
+      setValidEmail(CheckVlaidation({text: txt, type}));
+      setEmail(txt);
+    } else if (type==='password') {
+      setPassword(txt);
+      setValidPassword(CheckVlaidation({text: txt, type}));
+    }
+
   });
+
   return (
     <View style={styles.main}>
       <Text style={styles.headerText}>Sign Up</Text>
       <View style={styles.loginImageView}>
-
-    <Image source={images.loginScreenImage} style={styles.loginImage} />
-
-
-    </View>
+        <Image source={images.loginScreenImage} style={styles.loginImage} />
+      </View>
       <View style={styles.formContainer}>
-    
         <CommonInput
-          callbackFun={value => setCred({...cred, ...{email: value}})}
+          setFunction={txt => helperFun(txt, 'email')}
           placeholder={'Email'}
         />
+
+        <Text style={styles.errorText}>
+          {validEmail ? '' : email?.length > 0 ? 'Invalid Email' : ''}
+        </Text>
+
         <CommonInput
-          callbackFun={value => setCred({...cred, ...{password: value}})}
+          setFunction={txt => helperFun(txt, 'password')}
           placeholder={'Password'}
         />
-  
+        <Text style={styles.errorText}>
+          {validPassword
+            ? ''
+            : password?.length > 6
+            ? 'Weak Password'
+            : password?.length > 0
+            ? 'At least 6 Charecter Required'
+            : ''}
+        </Text>
+        
       </View>
-      <CommonButton
+      <CommonButton 
+      buttonDisable={validPassword&&validEmail}
         onPressFun={() => {
           SignUp(
-            cred.email,
-            cred.password,
-            userData =>{
-              if(userData){
-                navigation.replace('login')
+            email,
+            password,
+            userData => {
+              if (userData) {
+                navigation.replace('login');
               }
             },
             error => ErrorHandling(error),

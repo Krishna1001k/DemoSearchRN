@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import styles from '../../Utils/Style';
 import CommonInput from '../../Components/CommonInput';
@@ -6,14 +6,34 @@ import CommonButton from '../../Components/CommonButton';
 import {SignIn} from '../../Utils/CommonAuthFun';
 import {useNavigation} from '@react-navigation/native';
 import ErrorHandling from '../../Utils/ErrorHandling';
+import debounce from '../../Utils/debounceFunction';
+import { CheckVlaidation } from '../../Utils/validation';
 import images from '../../Utils/images';
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [cred, setCred] = useState({
-    email: '',
-    password: '',
+
+ 
+
+  const [email,setEmail]=useState();
+  const [password,setPassword]=useState();
+  const [validEmail,setValidEmail]=useState(false);
+  
+
+
+  const helperFun = debounce((txt, type) => {
+
+   if( type === 'email'){
+    setValidEmail(CheckVlaidation({text:txt,type}))
+      setEmail(txt)
+    }
+      else {
+        setPassword(txt)
+      }
+    
+   
   });
 
+  // useCallback(myfun=(txt)=>{CheckVlaidation(txt)},[])
   return (
     <View style={styles.main}>
       <Text style={styles.headerText}>Sign In</Text>
@@ -24,12 +44,16 @@ const LoginScreen = () => {
 
       <View style={styles.formContainer}>
         <CommonInput
-          callbackFun={value => setCred({...cred, ...{email: value}})}
+          setFunction={txt => helperFun(txt, 'email')}
           placeholder={'Email'}
         />
 
+        <Text style={styles.errorText}>
+          {validEmail ? '' : email?.length > 0 ? 'Invalid Email' : ''}
+        </Text>
+
         <CommonInput
-          callbackFun={value => setCred({...cred, ...{password: value}})}
+          setFunction={txt => helperFun(txt, 'password')}
           placeholder={'Password'}
         />
       </View>
@@ -37,8 +61,8 @@ const LoginScreen = () => {
       <CommonButton
         onPressFun={() =>
           SignIn(
-            cred.email,
-            cred.password,
+            email,
+            password,
             userData => {
               if (userData) {
                 navigation.replace('home');
