@@ -3,7 +3,6 @@ import regex from "./regex"
 
 export const CheckVlaidation = (data) => {
   const {type,text}=data;
-  console.log('type:--->'+type,'text--->'+text);
   switch (type) {
       case "email":
           

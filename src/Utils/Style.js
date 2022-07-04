@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     paddingLeft:120,
     paddingRight:16,
     paddingVertical: 4,
+    marginVertical:5,
     flexDirection: 'row',
   },
   flatListView: {
