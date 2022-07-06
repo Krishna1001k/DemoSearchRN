@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const ApiCall =  (text) => {
+import firestore from '@react-native-firebase/firestore';
+export const ApiCall =  (text) => {
 
   return (dispatch, getState) => {
     const {
@@ -8,11 +8,6 @@ const ApiCall =  (text) => {
     } = getState();
 
     if (text === '' || text === undefined) text = 'photo';
-
-    console.log(text, myText, ApiData, Page, mainLoading, listLoading);
-
-    console.log('apihit');
-
     axios
       .get(
         `https://api.unsplash.com/search/photos?page=${Page}&query=${text}&per_page=10&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`,
@@ -49,4 +44,20 @@ const ApiCall =  (text) => {
   };
 
 
-export default ApiCall;
+  export const fireStoreSetFun  = () => { 
+
+    return(dispatch,getState)=>{
+      const {
+        HomeReducer: {recentSearch,userUid},
+      } = getState();
+
+      firestore()
+      .collection('Users')
+      .doc(userUid)
+      .set({recentSearch})
+    }
+   
+  }
+
+
+

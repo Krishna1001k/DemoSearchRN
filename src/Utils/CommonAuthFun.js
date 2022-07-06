@@ -19,6 +19,7 @@ export const SignUp = async (email,pass,successCallBack,failureCallBack) => {
   export const SignIn = async (email, pass,successCallBack,failureCallBack) => {
     try{
       let response= await auth().signInWithEmailAndPassword(email, pass)
+  console.log(response);
       successCallBack(response)
     }
     catch (error){

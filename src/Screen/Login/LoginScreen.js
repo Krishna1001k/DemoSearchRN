@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import ErrorHandling from '../../Utils/ErrorHandling';
 import debounce from '../../Utils/debounceFunction';
 import { CheckVlaidation } from '../../Utils/validation';
+
 import images from '../../Utils/images';
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -30,7 +31,6 @@ const LoginScreen = () => {
         setPassword(txt)
       }
     
-   
   });
 
   // useCallback(myfun=(txt)=>{CheckVlaidation(txt)},[])
@@ -59,13 +59,16 @@ const LoginScreen = () => {
       </View>
 
       <CommonButton
+      buttonDisable={validEmail}
         onPressFun={() =>
           SignIn(
             email,
             password,
             userData => {
               if (userData) {
-                navigation.replace('home');
+                console.log(userData);
+                // dispatch({type:'SET_UID',payload:{userUid:userData.user._user.uid}})
+                // navigation.replace('home');
               }
             },
 

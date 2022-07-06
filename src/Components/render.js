@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import styles from '../Utils/Style';
 import {useDispatch, useSelector} from 'react-redux';
-import ApiCall from '../Redux/Home/action';
+import {ApiCall} from '../Redux/Home/action';
 import {useNavigation} from '@react-navigation/native';
 
 const Render = props => {

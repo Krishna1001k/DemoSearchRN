@@ -25,7 +25,7 @@ const SettingScreen = () => {
         <OptionList optionText={'Help & Support'} />
         <OptionList optionText={'Notifications'}/>
       </View>
-      <CommonButton onPressFun={()=>SignOut()} style={settingStyles.buttonStyle} label={'Log Out'} textStyle={settingStyles.btnText}/>
+      <CommonButton buttonDisable={true} onPressFun={()=>SignOut()} style={settingStyles.buttonStyle} label={'Log Out'} textStyle={settingStyles.btnText}/>
 
       <Text>App Version</Text>
       <Text>{Version}</Text>
