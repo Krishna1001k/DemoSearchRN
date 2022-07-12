@@ -74,17 +74,20 @@ const Detail = () => {
           keyExtractor={(item, index) => item.id + index}
           renderItem={({item}) => renderItems(item)}
           numColumns={3}
+
+
           onEndReached={() => {
             console.log('onEndReached run');
-            console.log('page: ', page);
+            console.log('page: ', page,photosListLoader);
 
             if (!photosListLoader) {
               dispatch({type: 'INCREASE_PAGE', payload: {page: page + 1}});
               dispatch({type: 'LOADER', payload: {photosListLoader: true}});
               dispatch(PhotosListApiCall(user));
+              console.log(photosListLoader);
             }
           }}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.1}
         />
       </View>
     </View>

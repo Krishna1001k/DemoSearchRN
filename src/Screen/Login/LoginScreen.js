@@ -33,7 +33,6 @@ const LoginScreen = () => {
     
   });
 
-  // useCallback(myfun=(txt)=>{CheckVlaidation(txt)},[])
   return (
     <View style={styles.main}>
       <Text style={styles.headerText}>Sign In</Text>
@@ -67,7 +66,7 @@ const LoginScreen = () => {
             userData => {
               if (userData) {
                 console.log(userData);
-                // dispatch({type:'SET_UID',payload:{userUid:userData.user._user.uid}})
+                dispatch({type:'SET_UID',payload:{userUid:userData.user._user.uid}})
                 // navigation.replace('home');
               }
             },
@@ -82,7 +81,7 @@ const LoginScreen = () => {
 
       <View style={styles.bottomTextContainer}>
         <Text>Don't have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('signUp')}>
+        <TouchableOpacity onPress={() => navigation.replace('signUp')}>
           <Text style={styles.bottomTouchableText}>Sign Up</Text>
         </TouchableOpacity>
       </View>

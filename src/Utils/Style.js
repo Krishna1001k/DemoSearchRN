@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   btnSty: {
-    backgroundColor: color.primaryWhite,
+    backgroundColor: color.lightPink,
     height: '7%',
     width: '16%',
     zIndex: 1,
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
+    position:'absolute',
+    bottom:30,
+    right:10,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
   },
   bottomTextContainer: {
     flexDirection: 'row',
-    position: 'absolute',
-    bottom: 40,
+ 
+    marginTop: 100,
     alignItems: 'center',
   },
   bottomTouchableText: {
@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
     width: width / 1.2,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'grey',
   },
   loginImage: {
     height: height / 6,
@@ -204,7 +203,7 @@ const styles = StyleSheet.create({
   },
   errorText:{
     color:'red',
-    height:15,
+    // height:15,
   },
   
 });

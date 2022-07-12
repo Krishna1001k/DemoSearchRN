@@ -52,10 +52,10 @@ const SignUpScreen = () => {
         <Text style={styles.errorText}>
           {validPassword
             ? ''
-            : password?.length > 6
+            : password?.length >=6
             ? 'Weak Password'
             : password?.length > 0
-            ? 'At least 6 Charecter Required'
+            ? 'At least 6 Character Required'
             : ''}
         </Text>
         
@@ -68,7 +68,8 @@ const SignUpScreen = () => {
             password,
             userData => {
               if (userData) {
-                navigation.replace('login');
+                dispatch({type:'SET_UID',payload:{userUid:userData.user._user.uid}})
+                // navigation.replace('login');
               }
             },
             error => ErrorHandling(error),
@@ -81,7 +82,7 @@ const SignUpScreen = () => {
 
       <View style={styles.bottomTextContainer}>
         <Text>Don't have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('login')}>
+        <TouchableOpacity onPress={() => navigation.replace('login')}>
           <Text style={styles.bottomTouchableText}>Sign In</Text>
         </TouchableOpacity>
       </View>

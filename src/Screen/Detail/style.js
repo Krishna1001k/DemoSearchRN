@@ -101,6 +101,7 @@ const detailStyle = StyleSheet.create({
     backgroundColor: 'white',
     width: width / 1.09,
     paddingHorizontal: 3,
+    paddingBottom:110,
   },
   renderView: {
     backgroundColor: 'lightgrey',

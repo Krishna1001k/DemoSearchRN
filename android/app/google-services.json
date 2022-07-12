@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "270302728780",
+    "firebase_url": "https://searchdemo-90643-default-rtdb.firebaseio.com",
+    "project_id": "searchdemo-90643",
+    "storage_bucket": "searchdemo-90643.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270302728780:android:eec2649df750ae24af9ae9",
+        "android_client_info": {
+          "package_name": "com.demosearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270302728780-pn0vcvp8qvj8sup8agt76puo2q3m4rnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCUu7Vrr907lODiur0TQ2jPXRLmpGpD_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270302728780-pn0vcvp8qvj8sup8agt76puo2q3m4rnm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "270302728780-sghtitrnkatc5t5monte52v3emp00bp4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.DemoSearch"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

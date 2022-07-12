@@ -10,8 +10,8 @@ console.log(username);
 
         console.log(page);
 
-        axios.get(`https://api.unsplash.com/users/${username}/photos?page=${page}&per_page=15&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`).then((resp)=>{
-
+        axios.get(`https://api.unsplash.com/users/${username}/photos?page=${page}&per_page=12&client_id=DG0CrUMFOD7-u5ejk-htJzedtB2dMah2RSmNrDC4WT4`).then((resp)=>{
+console.log(resp);
 
         if(page>1){
             dispatch({type:"ADD_LIST",payload:{photosList:[...photosList,...resp.data]}})
@@ -19,7 +19,12 @@ console.log(username);
         else{
             dispatch({type:"ADD_LIST",payload:{photosList:[...resp.data]}})
         }
-        dispatch({type:'LOADER',payload:{photosListLoader:false}})
+        if(resp.data.length>0){
+            dispatch({type:'LOADER',payload:{photosListLoader:false}})
+        }
+       
+
+         
 
         })
         .catch((err)=>{

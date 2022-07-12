@@ -1,13 +1,22 @@
-import { View, Text,StyleSheet } from 'react-native'
+import { Text,StyleSheet,TouchableOpacity} from 'react-native'
 import React from 'react'
+import { ApiCall } from '../Redux/Home/action';
 import HomeStyle from '../Screen/Home/style';
-const renderRecentSearch = (item) => {
+import { useDispatch } from 'react-redux';
+
+
+const RenderRecentSearch = (input) => {
+    const {item,index,onClickItem=()=>{}}=input
     // console.log('--------->',item);
+    // const dispatch=useDispatch();
+    const onPressFunction=()=>{
+        onClickItem(index)
+    }
   return (
-    <View style={HomeStyle.recentSearchView}>
+    <TouchableOpacity onPress={onPressFunction} style={HomeStyle.recentSearchView}>
       <Text style={HomeStyle.recentSearchText}>{item}</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
-export default renderRecentSearch
+export default RenderRecentSearch

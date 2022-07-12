@@ -5,11 +5,11 @@ const {height, width} = Dimensions.get('screen');
 
 const HomeStyle = StyleSheet.create({
   searchView: {
-    height: height /7 ,
+    // height: height /7 ,
     width: width,
     // paddingHorizontal:20,
     justifyContent:'space-between',
-    backgroundColor: color.primaryWhite,
+    backgroundColor: color.primary,
     paddingBottom: 5,
 
   },
@@ -30,16 +30,16 @@ const HomeStyle = StyleSheet.create({
     fontWeight: '700',
   },
   recentSearchView:{
-    height:height/30,
+    // height:height/30,
     // alignItems:'center',
     justifyContent:'center',
     marginVertical:5,
     borderRadius:20,
     marginHorizontal:5,
-    paddingVertical:5,
+    // paddingVertical:5,
     paddingHorizontal:10,
 
-    backgroundColor:'black'
+    backgroundColor:'#2666CF'
   },
   recentSearchText:{
     color:color.primaryWhite,

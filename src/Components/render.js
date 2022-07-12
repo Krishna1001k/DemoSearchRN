@@ -14,9 +14,18 @@ import {useNavigation} from '@react-navigation/native';
 
 const Render = props => {
   const navigation = useNavigation();
-  const {Page, myText, listLoading} = useSelector(store => store.HomeReducer);
+  const {Page, myText, listLoading,ApiData} = useSelector(store => store.HomeReducer);
+  console.log(myText);
   const dispatch = useDispatch();
 
+  const onEndReached=() => {
+    console.log('HomeOnEndReached   page:', Page, listLoading);
+    if (listLoading === false) {
+      dispatch({type: 'SET_LISTLOAD', payload: {listLoading: true}});
+      dispatch({type: 'PAGE', payload: {Page: Page + 1}});
+      dispatch(ApiCall(myText));
+    }
+  }
   const rendrItems = item => {
     return (
       <TouchableOpacity
@@ -50,14 +59,7 @@ const Render = props => {
         ListFooterComponent={
           listLoading && <ActivityIndicator size={'large'} color="grey" />
         }
-        onEndReached={() => {
-          console.log('HomeOnEndReached   page:', Page, listLoading);
-          if (listLoading === false) {
-            dispatch({type: 'SET_LISTLOAD', payload: {listLoading: true}});
-            dispatch({type: 'PAGE', payload: {Page: Page + 1}});
-            dispatch(ApiCall(myText));
-          }
-        }}
+        onEndReached={ApiData.length>=10?onEndReached:null}
         ref={props.reff}
         onEndReachedThreshold={0.8}
       />
