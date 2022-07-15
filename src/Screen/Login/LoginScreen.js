@@ -10,28 +10,37 @@ import debounce from '../../Utils/debounceFunction';
 import { CheckVlaidation } from '../../Utils/validation';
 
 import images from '../../Utils/images';
+import { useDispatch } from 'react-redux';
 const LoginScreen = () => {
   const navigation = useNavigation();
 
  
-
+const dispatch=useDispatch();
   const [email,setEmail]=useState();
   const [password,setPassword]=useState();
   const [validEmail,setValidEmail]=useState(false);
+  const [validPassword,setValidPassword]=useState(true);
   
-
-
-  const helperFun = debounce((txt, type) => {
-
-   if( type === 'email'){
-    setValidEmail(CheckVlaidation({text:txt,type}))
+const helperFunEmail=useCallback((txt)=>{
+  setValidEmail(CheckVlaidation({text:txt,type:"email"}))
       setEmail(txt)
-    }
-      else {
-        setPassword(txt)
-      }
+},[])
+
+const helperFunPass=useCallback((txt)=>{
+  setPassword(txt)
+},[])
+
+  // const helperFun =useCallback((txt, type) => {
+
+  //  if( type === 'email'){
+  //   setValidEmail(CheckVlaidation({text:txt,type}))
+  //     setEmail(txt)
+  //   }
+  //     else {
+  //       setPassword(txt)
+  //     }
     
-  });
+  // },[email]);
 
   return (
     <View style={styles.main}>
@@ -43,7 +52,8 @@ const LoginScreen = () => {
 
       <View style={styles.formContainer}>
         <CommonInput
-          setFunction={txt => helperFun(txt, 'email')}
+         value={email}
+          setFunction={helperFunEmail}
           placeholder={'Email'}
         />
 
@@ -52,27 +62,32 @@ const LoginScreen = () => {
         </Text>
 
         <CommonInput
-          setFunction={txt => helperFun(txt, 'password')}
+        value={password}
+          setFunction={helperFunPass}
           placeholder={'Password'}
         />
+         <Text style={styles.errorText}>
+          {validPassword? '' :'please enter the password'}
+        </Text>
       </View>
 
       <CommonButton
+      
       buttonDisable={validEmail}
-        onPressFun={() =>
+        onPressFun={() =>{
+          password?.length>0?setValidPassword(true):setValidPassword(false)
           SignIn(
             email,
             password,
             userData => {
               if (userData) {
-                console.log(userData);
+                console.log('on login userData',userData);
                 dispatch({type:'SET_UID',payload:{userUid:userData.user._user.uid}})
                 // navigation.replace('home');
               }
             },
-
             err => ErrorHandling(err),
-          )
+          )}
         }
         style={styles.btnStyle}
         textStyle={styles.btnText}
@@ -89,4 +104,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default React.memo(LoginScreen);

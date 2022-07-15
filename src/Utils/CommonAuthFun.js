@@ -10,7 +10,8 @@ export const SignUp = async (email,pass,successCallBack,failureCallBack) => {
   try {
     let response = await auth().createUserWithEmailAndPassword(email, pass)
     successCallBack(response)
-  } catch (error){
+  } 
+  catch (error){
     failureCallBack(error.code)
   }
      
@@ -19,11 +20,11 @@ export const SignUp = async (email,pass,successCallBack,failureCallBack) => {
   export const SignIn = async (email, pass,successCallBack,failureCallBack) => {
     try{
       let response= await auth().signInWithEmailAndPassword(email, pass)
-  console.log(response);
+  console.log('login api success response',response);
       successCallBack(response)
     }
     catch (error){
-      console.log(error);
+      console.log('sign in error',error);
       failureCallBack(error.code)
     }
    

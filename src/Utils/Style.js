@@ -46,9 +46,10 @@ const styles = StyleSheet.create({
     height: 95,
     width: '24%',
     borderRadius: 50,
-    position: 'relative',
-    top: 40,
-    zIndex: 1,
+    // position: 're',
+    // top: 40,
+    // left:10,
+    // zIndex: 1,
     resizeMode: 'cover',
   },
   cardHeaderText: {
@@ -131,9 +132,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   TextInput:{
-    height: height /16,
+    marginTop: 15,
+    height: height /23,
    flex:1,
-   justifyContent:'center',
+   justifyContent:"flex-end",
    alignItems:'center',
 
   
@@ -141,6 +143,7 @@ const styles = StyleSheet.create({
   TextInputInnerView:{
     flexDirection:'row',
     alignItems:'center',
+    // backgroundColor:'grey'
 
   },
   TextInputView: {

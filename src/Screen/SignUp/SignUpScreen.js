@@ -18,7 +18,19 @@ const SignUpScreen = () => {
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
 
-  const helperFun = debounce((txt, type) => {
+
+  const helperFunEmail=useCallback((txt,type)=>{
+    setValidEmail(CheckVlaidation({text: txt, type}));
+    setEmail(txt);
+  },[])
+  
+  const helperFunPass=useCallback((txt,type)=>{
+    setPassword(txt);
+    setValidPassword(CheckVlaidation({text: txt, type}));
+  },[])
+
+
+  const helperFun = (txt, type) => {
     if (type === 'email') {
       setValidEmail(CheckVlaidation({text: txt, type}));
       setEmail(txt);
@@ -27,7 +39,7 @@ const SignUpScreen = () => {
       setValidPassword(CheckVlaidation({text: txt, type}));
     }
 
-  });
+  };
 
   return (
     <View style={styles.main}>
@@ -37,7 +49,8 @@ const SignUpScreen = () => {
       </View>
       <View style={styles.formContainer}>
         <CommonInput
-          setFunction={txt => helperFun(txt, 'email')}
+        value={email}
+          setFunction={txt => helperFunEmail(txt, 'email')}
           placeholder={'Email'}
         />
 
@@ -46,7 +59,8 @@ const SignUpScreen = () => {
         </Text>
 
         <CommonInput
-          setFunction={txt => helperFun(txt, 'password')}
+        value={password}
+          setFunction={txt => helperFunPass(txt, 'password')}
           placeholder={'Password'}
         />
         <Text style={styles.errorText}>
