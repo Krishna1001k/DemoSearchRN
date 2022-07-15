@@ -1,5 +1,12 @@
-import {View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
-import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Animated,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import styles from '../../Utils/Style';
 import detailStyle from './style';
 import {useRoute, useNavigation} from '@react-navigation/native';
@@ -11,7 +18,7 @@ import renderItems from '../../Components/renderItems';
 
 const Detail = () => {
   const navigation = useNavigation();
-
+  const animateValue = useState(new Animated.Value(0))[0];
   const {photosList, page, photosListLoader} = useSelector(
     store => store.DetailReducer,
   );
@@ -26,9 +33,11 @@ const Detail = () => {
     dispatch(PhotosListApiCall(user));
   }, []);
 
+ 
+
   return (
     <View style={detailStyle.main}>
-      <View style={{...styles.headerView,paddingLeft:10,paddingRight:89,}}>
+      <View style={{...styles.headerView, paddingLeft: 10, paddingRight: 89}}>
         <TouchableOpacity
           style={detailStyle.backArrowView}
           onPress={() => {
@@ -41,55 +50,68 @@ const Detail = () => {
 
         <Text style={styles.headerText}>Profile Details</Text>
       </View>
-
-      <Image
-        style={styles.profileImage}
-        source={{uri: user.profile_image.large}}
-      />
-
-      <View style={detailStyle.viewStyle}>
-        <View style={detailStyle.userDtailView}>
-          <Text numberOfLines={1} style={styles.cardHeaderText}>
-            {user.name}
-          </Text>
-          <Text numberOfLines={1} style={styles.locationText}>
-            {user.location}
-          </Text>
-
-          <View style={detailStyle.detailRatingView}>
-            <CommonRatingView numbers={user.total_likes} label={'Likes'} />
-            <CommonRatingView numbers={user.total_photos} label={'Photos'} />
-            <CommonRatingView
-              numbers={user.total_collections}
-              label={'Collections'}
-            />
-          </View>
-        </View>
-
-        <FlatList
-          data={photosList}
-          showsVerticalScrollIndicator={false}
-          bounces={false}
-          contentContainerStyle={detailStyle.flatListStyle}
-          keyExtractor={(item, index) => item.id + index}
-          renderItem={({item}) => renderItems(item)}
-          numColumns={3}
-
-
-          onEndReached={() => {
-            console.log('onEndReached run');
-            console.log('page: ', page,photosListLoader);
-
-            if (!photosListLoader) {
-              dispatch({type: 'INCREASE_PAGE', payload: {page: page + 1}});
-              dispatch({type: 'LOADER', payload: {photosListLoader: true}});
-              dispatch(PhotosListApiCall(user));
-              console.log(photosListLoader);
-            }
-          }}
-          onEndReachedThreshold={0.1}
+      <Animated.View style={{
+    
+      transform:[{
+        translateY:animateValue.interpolate({
+          inputRange:[0,500],
+          outputRange:[0,-50],
+          extrapolate:'clamp',
+        })
+      }]
+    }}>
+        <Image
+          // style={styles.profileImage}
+          style={detailStyle.profileImage}
+          source={{uri: user.profile_image.large}}
         />
-      </View>
+
+        <View style={detailStyle.viewStyle}>
+          <View style={detailStyle.userDtailView}>
+            <Text numberOfLines={1} style={styles.cardHeaderText}>
+              {user.name}
+            </Text>
+            <Text numberOfLines={1} style={styles.locationText}>
+              {user.location}
+            </Text>
+
+            <View style={detailStyle.detailRatingView}>
+              <CommonRatingView numbers={user.total_likes} label={'Likes'} />
+              <CommonRatingView numbers={user.total_photos} label={'Photos'} />
+              <CommonRatingView
+                numbers={user.total_collections}
+                label={'Collections'}
+              />
+            </View>
+          </View>
+
+          <FlatList
+            data={photosList}
+
+            scrollEventThrottle={16}
+            onScroll={(event)=>animateValue.setValue(event.nativeEvent.contentOffset.y)}
+
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            contentContainerStyle={detailStyle.flatListStyle}
+            keyExtractor={(item, index) => item.id + index}
+            renderItem={({item}) => renderItems(item)}
+            numColumns={3}
+            onEndReached={() => {
+              console.log('onEndReached run');
+              console.log('page: ', page, photosListLoader);
+
+              if (!photosListLoader) {
+                dispatch({type: 'INCREASE_PAGE', payload: {page: page + 1}});
+                dispatch({type: 'LOADER', payload: {photosListLoader: true}});
+                dispatch(PhotosListApiCall(user));
+                console.log(photosListLoader);
+              }
+            }}
+            onEndReachedThreshold={0.1}
+          />
+        </View>
+      </Animated.View>
     </View>
   );
 };

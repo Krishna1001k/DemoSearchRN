@@ -56,6 +56,15 @@ const detailStyle = StyleSheet.create({
     paddingVertical: 50,
     alignItems: 'center',
   },
+  profileImage: {
+    height: 100,
+    width: 100,
+    resizeMode: 'cover',
+    borderRadius: 100 / 2,
+    top: 45,
+    left: 140,
+    zIndex: 1,
+  },
   bioText: {
     marginVertical: 5,
     fontSize: 14,
@@ -71,7 +80,7 @@ const detailStyle = StyleSheet.create({
     backgroundColor: '#E4FBFF',
     paddingHorizontal: 15,
     width: width,
-    height: height / 1.18,
+    height: height / 1.1,
     paddingBottom: 25,
   },
   detailRatingView: {
@@ -100,8 +109,9 @@ const detailStyle = StyleSheet.create({
   flatListStyle: {
     backgroundColor: 'white',
     width: width / 1.09,
+    // height:height/4,
     paddingHorizontal: 3,
-    paddingBottom:110,
+    paddingBottom: 110,
   },
   renderView: {
     backgroundColor: 'lightgrey',

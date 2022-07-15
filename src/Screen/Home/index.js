@@ -30,6 +30,7 @@ const Home = () => {
     dispatch(ApiCall('photo', value => console.log(value)));
   }, []);
 
+//.......................Helper Function....................................
   const helperFun = debounce(txt => {
     dispatch({type: 'SET_MAINLOAD', payload: {mainLoading:true}});
     setText(txt);
@@ -38,11 +39,11 @@ const Home = () => {
       dispatch({type: 'PAGE', payload: {Page: 1}});
     }
 
-    !mainLoading&& onBlur(txt)
+    !mainLoading&& addRecentSearch(txt)
     dispatch(ApiCall(txt));
   });
-
-  const onBlur = search => {
+//...............Adding Recent Search To Firebase.............................
+  const addRecentSearch = search => {
     let index = recentSearch.findIndex(ele => {
        let eleText=ele.trim();
        eleText=eleText.toUpperCase();
@@ -62,6 +63,8 @@ const Home = () => {
     console.log('myarrrrrrrrr', recentSearch);
   };
 
+
+//......................Adding Recent Search On Click Any Recent Search Item..........  
   const onClickItem = index => {
 
     if (!mainLoading) {
@@ -70,9 +73,9 @@ const Home = () => {
     }
     dispatch(ApiCall(recentSearch[index]));
     setText(recentSearch[index]);
-    onBlur(recentSearch[index]);
+    addRecentSearch(recentSearch[index]);
   };
-
+//......................Recent Search RenderItem Funtion...............................
   const renderItem = row => {
     const {item, index} = row;
     return (
@@ -96,7 +99,6 @@ const Home = () => {
       <View style={HomeStyle.searchView}>
         <View style={HomeStyle.search}>
           <TextInput
-            // onBlur={() => }
             // value={text}
             placeholder="Search"
             onChangeText={txt => {
