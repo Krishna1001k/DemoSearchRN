@@ -5,6 +5,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 const StatusBarHeight = getStatusBarHeight();
 
 const {height, width} = Dimensions.get('screen');
+const winHeight = Dimensions.get('window').height;
 
 const detailStyle = StyleSheet.create({
   main: {
@@ -62,7 +63,7 @@ const detailStyle = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 100 / 2,
     top: 45,
-    left: 140,
+    left: 150,
     zIndex: 1,
   },
   bioText: {
@@ -109,9 +110,8 @@ const detailStyle = StyleSheet.create({
   flatListStyle: {
     backgroundColor: 'white',
     width: width / 1.09,
-    // height:height/4,
     paddingHorizontal: 3,
-    paddingBottom: 110,
+    paddingBottom: height-winHeight+StatusBarHeight+20,
   },
   renderView: {
     backgroundColor: 'lightgrey',
@@ -119,6 +119,7 @@ const detailStyle = StyleSheet.create({
     width: width / 3.5,
     marginHorizontal: 3,
     marginVertical: 5,
+    borderRadius: 5,
     overflow: 'hidden',
   },
   renderImage: {

@@ -30,16 +30,16 @@ const SignUpScreen = () => {
   },[])
 
 
-  const helperFun = (txt, type) => {
-    if (type === 'email') {
-      setValidEmail(CheckVlaidation({text: txt, type}));
-      setEmail(txt);
-    } else if (type==='password') {
-      setPassword(txt);
-      setValidPassword(CheckVlaidation({text: txt, type}));
-    }
+  // const helperFun = (txt, type) => {
+  //   if (type === 'email') {
+  //     setValidEmail(CheckVlaidation({text: txt, type}));
+  //     setEmail(txt);
+  //   } else if (type==='password') {
+  //     setPassword(txt);
+  //     setValidPassword(CheckVlaidation({text: txt, type}));
+  //   }
 
-  };
+  // };
 
   return (
     <View style={styles.main}>
@@ -60,7 +60,7 @@ const SignUpScreen = () => {
 
         <CommonInput
         value={password}
-          setFunction={txt => helperFunPass(txt, 'password')}
+          setFunction={txt => helperFunPass (txt, 'password')}
           placeholder={'Password'}
         />
         <Text style={styles.errorText}>

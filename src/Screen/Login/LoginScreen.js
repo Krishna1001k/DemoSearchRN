@@ -6,7 +6,6 @@ import CommonButton from '../../Components/CommonButton';
 import {SignIn} from '../../Utils/CommonAuthFun';
 import {useNavigation} from '@react-navigation/native';
 import ErrorHandling from '../../Utils/ErrorHandling';
-import debounce from '../../Utils/debounceFunction';
 import { CheckVlaidation } from '../../Utils/validation';
 
 import images from '../../Utils/images';
@@ -29,18 +28,6 @@ const helperFunEmail=useCallback((txt)=>{
 const helperFunPass=useCallback((txt)=>{
   setPassword(txt)
 },[])
-
-  // const helperFun =useCallback((txt, type) => {
-
-  //  if( type === 'email'){
-  //   setValidEmail(CheckVlaidation({text:txt,type}))
-  //     setEmail(txt)
-  //   }
-  //     else {
-  //       setPassword(txt)
-  //     }
-    
-  // },[email]);
 
   return (
     <View style={styles.main}>

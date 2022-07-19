@@ -43,7 +43,7 @@ export const ApiCall = text => {
       })
 
       .catch(err => {
-        // dispatch({type: 'SET_MAINLOAD', payload: {mainLoading: false}});
+        dispatch({type: 'SET_MAINLOAD', payload: {mainLoading: false}});
 
         console.log(err);
       });
@@ -60,4 +60,4 @@ export const fireStoreSetFun = () => {
   };
 };
 
-export const AuthChange = () => {};
+// export const AuthChange = () => {};

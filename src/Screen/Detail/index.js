@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   FlatList,
   Animated,
+  Dimensions
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from '../../Utils/Style';
@@ -15,13 +16,19 @@ import {CommonRatingView} from '../../Utils/CommonFuntions';
 import {useSelector, useDispatch} from 'react-redux';
 import PhotosListApiCall from '../../Redux/Detail/action';
 import renderItems from '../../Components/renderItems';
-
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const Detail = () => {
   const navigation = useNavigation();
   const animateValue = useState(new Animated.Value(0))[0];
   const {photosList, page, photosListLoader} = useSelector(
     store => store.DetailReducer,
   );
+ 
+  
+  // const onScroll=Animated.event([{nativeEvent:{contentOffset:{y:animateValue}}}],{useNativeDriver:true})
+
+const AnimatedFlatlist=Animated.createAnimatedComponent(FlatList)
+
 
   const dispatch = useDispatch();
 
@@ -50,18 +57,19 @@ const Detail = () => {
 
         <Text style={styles.headerText}>Profile Details</Text>
       </View>
-      <Animated.View style={{
-    
-      transform:[{
-        translateY:animateValue.interpolate({
-          inputRange:[0,500],
-          outputRange:[0,-50],
-          extrapolate:'clamp',
-        })
-      }]
-    }}>
+      <Animated.View
+        style={{
+          transform: [
+            {
+              translateY: animateValue.interpolate({
+                inputRange: [0, 500],
+                outputRange: [0, -50],
+                extrapolate: 'clamp',
+              }),
+            },
+          ],
+        }}>
         <Image
-          // style={styles.profileImage}
           style={detailStyle.profileImage}
           source={{uri: user.profile_image.large}}
         />
@@ -85,12 +93,14 @@ const Detail = () => {
             </View>
           </View>
 
-          <FlatList
+          <AnimatedFlatlist
             data={photosList}
-
             scrollEventThrottle={16}
-            onScroll={(event)=>animateValue.setValue(event.nativeEvent.contentOffset.y)}
-
+            // onScroll={(event)=>animateValue.setValue(event.nativeEvent.contentOffset.y)}
+            onScroll={Animated.event(
+              [{nativeEvent: {contentOffset: {y: animateValue}}}],
+              {useNativeDriver: true},
+            )}
             showsVerticalScrollIndicator={false}
             bounces={false}
             contentContainerStyle={detailStyle.flatListStyle}

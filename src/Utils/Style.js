@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   cardImage: {
+    backgroundColor:color.primaryWhite,
     height: '80%',
     width: '35%',
     borderRadius: 10,

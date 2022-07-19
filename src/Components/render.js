@@ -54,6 +54,7 @@ const Render = props => {
       <FlatList
         data={props.data}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{marginBottom:100}}
         keyExtractor={(item, index) => item.id + index}
         renderItem={({item}) => rendrItems(item)}
         ListFooterComponent={
