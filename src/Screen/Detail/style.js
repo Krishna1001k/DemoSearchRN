@@ -54,17 +54,15 @@ const detailStyle = StyleSheet.create({
   userDtailView: {
     height: height / 5,
     width: width / 1.1,
-    paddingVertical: 50,
+    paddingVertical: 40,
     alignItems: 'center',
   },
   profileImage: {
     height: 100,
     width: 100,
+    marginVertical:10,
     resizeMode: 'cover',
     borderRadius: 100 / 2,
-    top: 45,
-    left: 150,
-    zIndex: 1,
   },
   bioText: {
     marginVertical: 5,
@@ -76,13 +74,11 @@ const detailStyle = StyleSheet.create({
     top: 200,
   },
   viewStyle: {
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    marginTop:65,
     backgroundColor: '#E4FBFF',
     paddingHorizontal: 15,
     width: width,
-    height: height / 1.1,
-    paddingBottom: 25,
+    // paddingBottom: 25,
   },
   detailRatingView: {
     flexDirection: 'row',
@@ -111,7 +107,7 @@ const detailStyle = StyleSheet.create({
     backgroundColor: 'white',
     width: width / 1.09,
     paddingHorizontal: 3,
-    paddingBottom: height-winHeight+StatusBarHeight+20,
+    paddingBottom: height-winHeight+StatusBarHeight+15,
   },
   renderView: {
     backgroundColor: 'lightgrey',
