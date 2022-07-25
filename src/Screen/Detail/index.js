@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   FlatList,
   Animated,
@@ -9,22 +8,39 @@ import {
 import React, {useEffect, useState} from 'react';
 import styles from '../../Utils/Style';
 import detailStyle from './style';
+import Modal from 'react-native-modal';
 import {useRoute, useNavigation} from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CommonRatingView} from '../../Utils/CommonFuntions';
 import {useSelector, useDispatch} from 'react-redux';
 import PhotosListApiCall from '../../Redux/Detail/action';
-import renderItems from '../../Components/renderItems';
-import { color } from '../../Utils/color';
-
+import RenderItems from '../../Components/renderItems';
+import {BackButton} from './components';
+import ImageModalView from './ImageModalView';
 const Detail = () => {
   const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalImage, setModalIamge] = useState({path: '', color: ''});
+
   const animateValue = useState(new Animated.Value(0.01))[0];
+
   const {photosList, page, photosListLoader} = useSelector(
     store => store.DetailReducer,
   );
 
-  const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
+  const renderItems = item => {
+    console.log(item);
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          setModalVisible(true);
+          console.log(item.color);
+          setModalIamge({path: item.urls.raw, color: item.color});
+        }}>
+        <RenderItems item={item} />
+      </TouchableOpacity>
+    );
+  };
 
   const dispatch = useDispatch();
 
@@ -37,63 +53,63 @@ const Detail = () => {
   }, []);
 
   return (
-    <View style={{...detailStyle.main, paddingTop: 25}}>
+    <View
+      style={{...detailStyle.main, paddingTop: 25}}>
+      {/*................................ Image Modal Screen..............................*/}
+
       <View
         style={{
           ...styles.headerView,
-          paddingTop:10,
+          paddingTop: 10,
           paddingLeft: 10,
           marginVertical: 10,
           paddingRight: 89,
         }}>
-        <TouchableOpacity
-          style={detailStyle.backArrowView}
+        <BackButton
           onPress={() => {
             dispatch({type: 'INCREASE_PAGE', payload: {page: 1}}),
               dispatch({type: 'ADD_LIST', payload: {photosList: []}}),
               navigation.goBack();
-          }}>
-          <Ionicons name={'arrow-back'} size={35} />
-        </TouchableOpacity>
-
+          }}
+        />
         <Text style={styles.headerText}>Profile Details</Text>
       </View>
+
 
       {
         <Animated.View
           style={{
             ...styles.headerView,
-            // marginTop:10,
             height: 100,
-            paddingTop:30,
+            paddingTop: 30,
             paddingLeft: 10,
             paddingRight: 89,
             backgroundColor: '#90C8AC',
             position: 'absolute',
             zIndex: 1,
             opacity: animateValue.interpolate({
-              inputRange: [0, 50,60],
-              outputRange: [0,0.5 ,1],
+              inputRange: [0, 50, 60],
+              outputRange: [0, 0.5, 1],
               extrapolate: 'clamp',
             }),
           }}>
-          <TouchableOpacity
-            style={detailStyle.backArrowView}
+          <BackButton
             onPress={() => {
               dispatch({type: 'INCREASE_PAGE', payload: {page: 1}}),
                 dispatch({type: 'ADD_LIST', payload: {photosList: []}}),
                 navigation.goBack();
-            }}>
-            <Ionicons name={'arrow-back'} size={35} />
-          </TouchableOpacity>
-
+            }}
+          />
           <Animated.Text
+            numberOfLines={1}
             style={{
+              // marginLeft: 10,
+
               fontWeight: '700',
               transform: [
                 {
                   translateX: animateValue.interpolate({
-                    inputRange: [10,  150],
+                    inputRange: [10, 150],
                     outputRange: [-50, -50],
                     extrapolate: 'clamp',
                   }),
@@ -129,28 +145,28 @@ const Detail = () => {
           ...detailStyle.profileImage,
           backgroundColor: 'grey',
           zIndex: 1,
-          top:80,
-          left:145,
+          top: 80,
+          left: 135,
           position: 'absolute',
           transform: [
             {
               translateX: animateValue.interpolate({
-                inputRange: [0,50 ,100,150],
-                outputRange: [0, -35,-70,-110],
+                inputRange: [0, 50, 100, 150],
+                outputRange: [0, -35, -70, -110],
                 extrapolate: 'clamp',
               }),
             },
             {
               translateY: animateValue.interpolate({
-                inputRange: [0,25,50, 100],
-                outputRange: [0,-15,-30,-72],
+                inputRange: [0, 25, 50, 100],
+                outputRange: [0, -15, -30, -72],
                 extrapolate: 'clamp',
               }),
             },
             {
               scale: animateValue.interpolate({
-                inputRange: [0,50,150],
-                outputRange: [1,0.7,0.5],
+                inputRange: [0, 50, 150],
+                outputRange: [1, 0.7, 0.5],
                 extrapolate: 'clamp',
               }),
             },
@@ -165,8 +181,8 @@ const Detail = () => {
           transform: [
             {
               translateY: animateValue.interpolate({
-                inputRange: [0,100, 200],
-                outputRange: [0,-100,-220],
+                inputRange: [0, 100, 200],
+                outputRange: [0, -100, -220],
                 extrapolate: 'clamp',
               }),
             },
@@ -193,21 +209,22 @@ const Detail = () => {
         <FlatList
           data={photosList}
           scrollEventThrottle={16}
-          // onScroll={Animated.event(
-          //   [{nativeEvent: {contentOffset: {y: animateValue}}}],
-          //   {useNativeDriver: true,listener:({nativeEvent})=> animateValue.setValue(nativeEvent.contentOffset.y) },
-          // ) }
-          onScroll = {(event) => Animated.event(
-            [{
-              nativeEvent: {
-                contentOffset: { y: animateValue },
+          onScroll={event =>
+            Animated.event(
+              [
+                {
+                  nativeEvent: {
+                    contentOffset: {y: animateValue},
+                  },
+                },
+              ],
+              {
+                useNativeDriver: true,
+                listener: ({nativeEvent}) =>
+                  animateValue.setValue(nativeEvent.contentOffset.y),
               },
-            }],
-            {
-              useNativeDriver: true,
-              listener: ({ nativeEvent }) => animateValue.setValue(nativeEvent.contentOffset.y),
-            },
-          ).__getHandler()(event)}
+            ).__getHandler()(event)
+          }
           showsVerticalScrollIndicator={false}
           bounces={false}
           contentContainerStyle={detailStyle.flatListStyle}
@@ -227,9 +244,27 @@ const Detail = () => {
           }}
           onEndReachedThreshold={0.1}
         />
+        {/* <Modal
+        visible={isModalVisible}
+        hasBackdrop={true}
+        backdropOpacity={0.5}
+        coverScreen
+        onBackdropPress={() => setModalVisible(false)}>
+          <View style={{flex:1}}>
+          </View>
+      </Modal> */}
+        <Modal
+          onBackdropPress={() => {
+            console.log('call');
+            setModalVisible(false);
+          }}
+          coverScreen={true}
+          isVisible={isModalVisible}>
+          <ImageModalView modalImage={modalImage} />
+        </Modal>
       </Animated.View>
     </View>
   );
 };
 
-export default React.memo(Detail);
+export default Detail;

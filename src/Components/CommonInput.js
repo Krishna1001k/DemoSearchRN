@@ -4,7 +4,6 @@ import {
   TextInput,
   Animated,
   TouchableOpacity,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import styles from '../Utils/Style';
@@ -13,7 +12,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 const CommonInput = props => {
   const textInputRef=useRef();
   const [isHide, setIsHide] = useState(true);
-  const value=useState(new Animated.Value(0))[0]
+  const value=useState(new Animated.Value(0))[0];
 
 const fontSizeAnimation=()=>{
   textInputRef.current.focus()

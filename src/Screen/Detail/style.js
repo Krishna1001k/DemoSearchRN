@@ -1,8 +1,9 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions,Animated} from 'react-native';
 import {color} from '../../Utils/color';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const StatusBarHeight = getStatusBarHeight();
+
 
 const {height, width} = Dimensions.get('screen');
 const winHeight = Dimensions.get('window').height;
@@ -124,6 +125,15 @@ const detailStyle = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 0.3,
   },
+  modalView:{
+    marginTop:60,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  modalImageStyle:{
+    height: height/1.6,
+    width:width/1.08,
+  }
 });
 
 export default detailStyle;
