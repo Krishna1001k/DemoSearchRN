@@ -46,3 +46,4 @@ export const SocailView = (props) => {
       </View>
     );
   };
+

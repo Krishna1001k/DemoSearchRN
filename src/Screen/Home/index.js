@@ -6,43 +6,56 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from '../../Utils/Style';
 import {useSelector, useDispatch} from 'react-redux';
-import {ApiCall, fireStoreSetFun} from '../../Redux/Home/action';
+// import {ApiCall, fireStoreSetFun} from '../../Redux/Home/action';
 import HomeStyle from './style';
 import FlatListRenderView from '../../Components/render';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import debounce from '../../Utils/debounceFunction';
 import RenderRecentSearch from '../../Components/RenderRecentSearch';
+import { sagaApiCall } from '../../Redux/saga/sagaActionGenerators';
+import { fireStoreSetFun } from '../../Redux/saga/sagaActionGenerators';
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [text, setText] = useState('');
   const reff = useRef(null);
 
-  const {ApiData, mainLoading, recentSearch} = useSelector(
+  const {ApiData, mainLoading, recentSearch,myText} = useSelector(
     store => store.HomeReducer,
   );
 
   useEffect(() => {
-    dispatch(ApiCall('photo', value => console.log(value)));
+    // dispatch(ApiCall('photo', value => console.log(value)));
+    dispatch(sagaApiCall(1,'photo'))
   }, []);
 
+  useEffect(()=>{
+   helperFun(text)
+  },[text])
+
 //.......................Helper Function....................................
-  const helperFun = debounce(txt => {
-    dispatch({type: 'SET_MAINLOAD', payload: {mainLoading:true}});
-    setText(txt);
+  const helperFun = useCallback(debounce(txt => {
+    // dispatch({type: 'SET_MAINLOAD', payload: {mainLoading:true}});
+    // setText(txt);
+console.log('asdfghjklkjhgfdqwertyuio[poiuytwazxcvbn-------------.............m,.][poiuyre');
+    dispatch(sagaApiCall(1,txt));
+
     if (!mainLoading) {
+      console.log('untsantasdfn000)))))0000000000');
       dispatch({type: 'ADD_DATA', payload: {ApiData: []}});
       dispatch({type: 'PAGE', payload: {Page: 1}});
     }
 
-    !mainLoading&& addRecentSearch(txt)
-    dispatch(ApiCall(txt));
-  });
+    console.log('untsantasdfn000)))))000000--------------------000');
+    addRecentSearch(txt)
+
+  }),[]);
 //...............Adding Recent Search To Firebase.............................
+
   const addRecentSearch = search => {
     let index = recentSearch.findIndex(ele => {
        let eleText=ele.trim();
@@ -57,9 +70,10 @@ const Home = () => {
     }
 
     search?.length > 0 && recentSearch.unshift(search);
-    dispatch({type: 'SET_RECENT_SEARCH', payload: {recentSearch}});
 
-    dispatch(fireStoreSetFun());
+ dispatch({type: 'SET_RECENT_SEARCH', payload: {recentSearch}});
+
+dispatch(fireStoreSetFun());
     console.log('myarrrrrrrrr', recentSearch);
   };
 
@@ -71,7 +85,7 @@ const Home = () => {
       dispatch({type: 'ADD_DATA', payload: {ApiData: []}});
       dispatch({type: 'PAGE', payload: {Page: 1}});
     }
-    dispatch(ApiCall(recentSearch[index]));
+    dispatch(sagaApiCall(1,recentSearch[index]));
     setText(recentSearch[index]);
     addRecentSearch(recentSearch[index]);
   };
@@ -99,11 +113,9 @@ const Home = () => {
       <View style={HomeStyle.searchView}>
         <View style={HomeStyle.search}>
           <TextInput
-            // value={text}
+            value={text}
             placeholder="Search"
-            onChangeText={txt => {
-              helperFun(txt);
-            }}
+            onChangeText={txt =>setText(txt)}
           />
         </View>
 
@@ -124,8 +136,8 @@ const Home = () => {
         )}
       </View>
 
-      {ApiData.length > 0 ? (
-        <FlatListRenderView data={ApiData} reff={reff} />
+      {ApiData.length > 0? (
+        <FlatListRenderView data={ApiData} ref={reff} />
       ) : (
         <ActivityIndicator style={styles.main} size="large" color="grey" />
       )}

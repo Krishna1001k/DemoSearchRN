@@ -1,5 +1,5 @@
 import { View, Text,Image } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../Utils/Style'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
@@ -10,41 +10,45 @@ const Splash = () => {
     const navigation=useNavigation();
     useEffect(()=>{
       let subscriber
-     
-        setTimeout(() => {
-           subscriber=auth().onAuthStateChanged((user)=>{
-             console.log('myUser',user);
-             if(user){
-              firestore()
-              .collection('Users')
-              .doc(user.uid)
-              .get()
-              .then((res)=>{
-                console.log('resData---$$$->',res.exists);
-
-                if(res.exists){
-                  dispatch({type:'SET_RECENT_SEARCH',payload:res.data()})
-                }
-                else{
-                  dispatch({type:'SET_RECENT_SEARCH',payload:[]})
-
-                }
-                // console.log(user.getIdTokenResult().then((res)=>console.log(res)));
-                
-              })
-              .catch((err)=>console.log(err))
-
-            //    console.log('dafdsfadfa',user);
-              dispatch({type:'SET_UID',payload:{userUid:user.uid}})
-               navigation.replace('home')
-            }
-             else navigation.replace('login')
-           
-            })
-        }, 1000);
+      setTimeout(() => {
+        subscriber= auth().onAuthStateChanged((user)=>{
+          console.log('myUser',user);
+          if(user){
+           firestore()
+           .collection('Users')
+           .doc(user.uid)
+           .get()
+           .then((res)=>{
+             console.log('resData---$$$->',res.exists);
+             if(res.exists){
+               dispatch({type:'SET_RECENT_SEARCH',payload:res.data()})
+             }
+             else{
+               console.log('recent search kahli hogya');
+               dispatch({type:'SET_RECENT_SEARCH',payload:[]})
+             }
+             navigation.replace('home')
+           })
+           .catch((err)=>console.log(err))
+  
+            console.log('Spalsh Screen user',user.uid);
+           dispatch({type:'SET_USER_UID',payload:{userUid:user.uid}})
+         
+         }
+         else navigation.replace('login')
+      
+        
+         })
+       
+      }, 1000);
+      
+      
         return subscriber
         
     },[])
+
+   
+
   return (
     <View style={{flex:1}}>
       <Image  source={require('../Assets/Imges/splash.jpeg')}/>

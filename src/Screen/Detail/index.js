@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   FlatList,
   Animated,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from '../../Utils/Style';
@@ -16,6 +17,7 @@ import PhotosListApiCall from '../../Redux/Detail/action';
 import RenderItems from '../../Components/renderItems';
 import {BackButton} from './components';
 import ImageModalView from './ImageModalView';
+import { sagaPhotosListApiCall } from '../../Redux/saga/sagaActionGenerators';
 const Detail = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
@@ -49,7 +51,8 @@ const Detail = () => {
   } = useRoute();
 
   useEffect(() => {
-    dispatch(PhotosListApiCall(user));
+    console.log('User Name',user.username);
+    dispatch(sagaPhotosListApiCall(user.username,1));
   }, []);
 
   return (
@@ -231,28 +234,21 @@ const Detail = () => {
           keyExtractor={(item, index) => item.id + index}
           renderItem={({item}) => renderItems(item)}
           numColumns={3}
+          ListFooterComponent={
+            photosListLoader && <ActivityIndicator size={'large'} color="grey" />
+          }
           onEndReached={() => {
             console.log('onEndReached run');
             console.log('page: ', page, photosListLoader);
 
             if (!photosListLoader) {
               dispatch({type: 'INCREASE_PAGE', payload: {page: page + 1}});
-              dispatch({type: 'LOADER', payload: {photosListLoader: true}});
-              dispatch(PhotosListApiCall(user));
+              dispatch(sagaPhotosListApiCall(user.username,page+1));
               console.log(photosListLoader);
             }
           }}
           onEndReachedThreshold={0.1}
         />
-        {/* <Modal
-        visible={isModalVisible}
-        hasBackdrop={true}
-        backdropOpacity={0.5}
-        coverScreen
-        onBackdropPress={() => setModalVisible(false)}>
-          <View style={{flex:1}}>
-          </View>
-      </Modal> */}
         <Modal
           onBackdropPress={() => {
             console.log('call');
