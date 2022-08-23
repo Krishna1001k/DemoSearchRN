@@ -33,6 +33,7 @@ export const SignUp = async (email,pass,successCallBack,failureCallBack) => {
 
   export const SignOut = async () => {
     try{
+  
       let response= await auth().signOut()
       console.log(response);
     }

@@ -21,29 +21,5 @@ export const SocailView = (props) => {
         </View>
     )
    }
-   export  const thumbImageViewFun = () => {
-    return (
-      <View style={detailStyle.detailView}>
-        <Image style={detailStyle.image} source={{uri: urls.thumb}} />
-        <ActivityIndicator
-          style={detailStyle.activityStyle}
-          size={'large'}
-          color={'grey'}
-        />
-      </View>
-    );
-  };
 
-  export const fullImageViewFun = () => {
-    return (
-      <View style={detailStyle.detailView}>
-        <Image
-          style={detailStyle.image}
-          source={{uri: urls.full}}
-          onLoadStart={() => onLoading(true)}
-          onLoadEnd={() => onLoading(false)}
-        />
-      </View>
-    );
-  };
 

@@ -9,7 +9,6 @@ import {
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from '../../Utils/Style';
 import {useSelector, useDispatch} from 'react-redux';
-// import {ApiCall, fireStoreSetFun} from '../../Redux/Home/action';
 import HomeStyle from './style';
 import FlatListRenderView from '../../Components/render';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
@@ -29,7 +28,6 @@ const Home = () => {
   );
 
   useEffect(() => {
-    // dispatch(ApiCall('photo', value => console.log(value)));
     dispatch(sagaApiCall(1,'photo'))
   }, []);
 
@@ -38,9 +36,11 @@ const Home = () => {
   },[text])
 
 //.......................Helper Function....................................
+/**
+ * helper function helping calling the debounce function 
+ */
   const helperFun = useCallback(debounce(txt => {
-    // dispatch({type: 'SET_MAINLOAD', payload: {mainLoading:true}});
-    // setText(txt);
+  
 console.log('asdfghjklkjhgfdqwertyuio[poiuytwazxcvbn-------------.............m,.][poiuyre');
     dispatch(sagaApiCall(1,txt));
 
@@ -54,7 +54,12 @@ console.log('asdfghjklkjhgfdqwertyuio[poiuytwazxcvbn-------------.............m,
     addRecentSearch(txt)
 
   }),[]);
-//...............Adding Recent Search To Firebase.............................
+
+/**
+ * manage the recent search array and call the firestore post api call
+ * @function
+ * @param {*} search 
+ */
 
   const addRecentSearch = search => {
     let index = recentSearch.findIndex(ele => {
@@ -78,7 +83,11 @@ dispatch(fireStoreSetFun());
   };
 
 
-//......................Adding Recent Search On Click Any Recent Search Item..........  
+//......................Adding Recent Search On Click Any Recent Search Item.......... 
+/**
+ * 
+ * @param {*} index 
+ */ 
   const onClickItem = index => {
 
     if (!mainLoading) {
@@ -89,9 +98,14 @@ dispatch(fireStoreSetFun());
     setText(recentSearch[index]);
     addRecentSearch(recentSearch[index]);
   };
-//......................Recent Search RenderItem Funtion...............................
-  const renderItem = row => {
-    const {item, index} = row;
+
+/**
+ * render item function for render the view of each item in recent seach array
+ * @param {*} row 
+ * @returns -> render view component for each recent search 
+ */
+  const renderItem = recentSearchItem => {
+    const {item, index} = recentSearchItem;
     return (
       <RenderRecentSearch index={index} onClickItem={onClickItem} item={item} />
     );
@@ -143,6 +157,7 @@ dispatch(fireStoreSetFun());
       )}
 
       <TouchableOpacity
+      disabled={!ApiData.length>0}
         style={styles.btnSty}
         onPress={() => {
           reff.current.scrollToOffset({offset: 0});

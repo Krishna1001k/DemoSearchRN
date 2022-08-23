@@ -16,6 +16,7 @@ const detailStyle = StyleSheet.create({
     backgroundColor: color.primary,
   },
   detailView: {
+    position:'absolute',
     height: '60%',
     width: width / 1.08,
     borderRadius: 5,

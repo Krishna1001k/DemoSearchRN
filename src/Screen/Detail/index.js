@@ -21,7 +21,7 @@ import { sagaPhotosListApiCall } from '../../Redux/saga/sagaActionGenerators';
 const Detail = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
-  const [modalImage, setModalIamge] = useState({path: '', color: ''});
+  const [modalImage, setModalIamge] = useState({});
 
   const animateValue = useState(new Animated.Value(0.01))[0];
 
@@ -30,14 +30,14 @@ const Detail = () => {
   );
 
   const renderItems = item => {
-    console.log(item);
+    // console.log(item);
     return (
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {
           setModalVisible(true);
           console.log(item.color);
-          setModalIamge({path: item.urls.raw, color: item.color});
+          setModalIamge(item);
         }}>
         <RenderItems item={item} />
       </TouchableOpacity>
@@ -58,6 +58,7 @@ const Detail = () => {
   return (
     <View
       style={{...detailStyle.main, paddingTop: 25}}>
+
       {/*................................ Image Modal Screen..............................*/}
 
       <View
@@ -83,10 +84,11 @@ const Detail = () => {
         <Animated.View
           style={{
             ...styles.headerView,
+            overflow:'hidden',
             height: 100,
-            paddingTop: 30,
+            paddingTop: 28,
             paddingLeft: 10,
-            paddingRight: 89,
+            justifyContent:'flex-start',
             backgroundColor: '#90C8AC',
             position: 'absolute',
             zIndex: 1,
@@ -106,14 +108,15 @@ const Detail = () => {
           <Animated.Text
             numberOfLines={1}
             style={{
-              // marginLeft: 10,
-
+            textAlign:'center',
+             marginLeft:130,
+             marginEnd:120,
               fontWeight: '700',
               transform: [
                 {
                   translateX: animateValue.interpolate({
                     inputRange: [10, 150],
-                    outputRange: [-50, -50],
+                    outputRange: [-100, 0],
                     extrapolate: 'clamp',
                   }),
                 },
@@ -250,6 +253,7 @@ const Detail = () => {
           onEndReachedThreshold={0.1}
         />
         <Modal
+        backdropColor={'#0F3D3E'}
           onBackdropPress={() => {
             console.log('call');
             setModalVisible(false);

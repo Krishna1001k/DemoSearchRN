@@ -1,6 +1,10 @@
 import {call, put, select} from '@redux-saga/core/effects';
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
+
+/** handler function for home section Api Call in saga and set the data to home reduer
+ * @param {*} action 
+ */
 export function* handleHomeApiData(action) {
   console.log('asdfasdfsdf', action);
   const {
@@ -14,7 +18,7 @@ export function* handleHomeApiData(action) {
       return axios.get(url);
     });
 
-    const {ApiData, Page, recentSearch, myText} = yield select(
+    const {ApiData, Page,} = yield select(
       store => store.HomeReducer,
     );
 
@@ -28,7 +32,8 @@ export function* handleHomeApiData(action) {
       });
 
       yield put({type: 'SET_LISTLOAD', payload: {listLoading: false}});
-    } else {
+    } 
+    else {
       yield put({type: 'ADD_DATA', payload: {ApiData: resp.data.results}});
       yield put({type: 'SET_MAINLOAD', payload: {mainLoading: false}});
     }
@@ -41,6 +46,11 @@ export function* handleHomeApiData(action) {
 }
 
 
+
+/**
+ * handler function for profile Detail photos section Api call in saga and set the data to detail reducer
+ * @param {*} action 
+ */
 export function* handlePhotosListApiCall(action) {
   const {
     payload: {url, page},
@@ -68,16 +78,44 @@ export function* handlePhotosListApiCall(action) {
   }
 }
 
-
+/**
+ * handler function for post Recent Search in firestore
+ * @param {*} action 
+ */
 export function* handleRecentSearchPostApi(action) {
   console.log('saga recent search post on firestore', action);
 
   const {recentSearch, userUid} = yield select(store => store.HomeReducer);
 
   try {
-    firestore().collection('Users').doc(userUid).set({recentSearch});
-  } catch (error) {
+   const res= yield call (()=>{
+    return (firestore().collection('Users').doc(userUid).set({recentSearch}))
+  })
+
+  console.log(res);
+
+  }
+   catch (error) {
     console.log(error);
+  }
+}
+/**
+ * handler function for Get Recent Search From firestore
+ * @param {*} action 
+ */
+export function* handleRecentSearchGetApi(action) {
+  console.log('saga recent search post on firestore', action);
+
+  const {recentSearch, userUid} = yield select(store => store.HomeReducer);
+
+  try {
+    const response= yield call(firestore().collection('Users').doc(userUid).get())
+    console.log('sdfghjkl;',response);
+     
+  }
+   catch (error) {
+    console.log(error);
+
   }
 }
 

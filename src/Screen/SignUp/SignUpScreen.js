@@ -30,16 +30,7 @@ const SignUpScreen = () => {
   },[])
 
 
-  // const helperFun = (txt, type) => {
-  //   if (type === 'email') {
-  //     setValidEmail(CheckVlaidation({text: txt, type}));
-  //     setEmail(txt);
-  //   } else if (type==='password') {
-  //     setPassword(txt);
-  //     setValidPassword(CheckVlaidation({text: txt, type}));
-  //   }
 
-  // };
 
   return (
     <View style={styles.main}>
@@ -83,7 +74,6 @@ const SignUpScreen = () => {
             userData => {
               if (userData) {
                 dispatch({type:'SET_UID',payload:{userUid:userData.user._user.uid}})
-                // navigation.replace('login');
               }
             },
             error => ErrorHandling(error),

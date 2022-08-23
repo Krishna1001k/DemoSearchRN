@@ -19,7 +19,7 @@ const Splash = () => {
            .doc(user.uid)
            .get()
            .then((res)=>{
-             console.log('resData---$$$->',res.exists);
+             console.log('firestore data from get api call->',res);
              if(res.exists){
                dispatch({type:'SET_RECENT_SEARCH',payload:res.data()})
              }
